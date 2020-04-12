@@ -3,7 +3,7 @@ session_start();
 require_once('common.php');
 
 //if (isset($username)){
-//	header('Location:center.php');
+//	header('Location:main.php');
 //unset($_SESSION["newsession"]);
 //}
 
@@ -66,7 +66,7 @@ if(isset($_POST['submit'])) {
 		$_SESSION["username"] = $username;
 		$_SESSION["fullname"] = $fullname;
 		$_SESSION["pwdhash"] = $pwdhash;
-		header('Location:center.php');
+		header('Location:main.php');
 	}
 }
 

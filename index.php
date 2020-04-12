@@ -4,7 +4,7 @@ session_start();
 require_once('common.php');
 
 if (isset($username)){
-#	header('Location:center.php');
+#	header('Location:main.php');
 }
 
 $db = connectToDB();
@@ -47,7 +47,7 @@ if(isset($_POST['submit'])) {
 	if (empty($error_message)) {
 		$_SESSION["username"] = $username;
 		$_SESSION["fullname"] = $fullname;
-		header('Location:center.php');
+		header('Location:main.php');
 	}
 }
 
@@ -88,7 +88,7 @@ function validateData() {
 		document.getElementById("password").value = "";
 		return false;
 	}
-	//    document.getElementById("form1").action = "/lockers/edit/" + x;
+	
 	return true;
 }
 </script>

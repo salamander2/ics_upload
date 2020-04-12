@@ -14,7 +14,7 @@
 	$conn = connectDB();
 	$sql = "DELETE from fileinfo where filename='$filename' and username = '$username'";
 	mysqli_query($conn,$sql);
-	$url = "center.php";
+	$url = "main.php";
 	echo "<script type='text/javascript'>";
 	echo "window.location.href='$url'";
 	echo "</script>";

@@ -12,7 +12,7 @@ header('Content-Type: application/octet-stream');
 header("Content-Transfer-Encoding: Binary");
 header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\"");
 readfile($file_url);
-$url = "center.php";
+$url = "main.php";
 echo "<script type='text/javascript'>";
 echo "window.location.href='$url'";
 echo "</script>";

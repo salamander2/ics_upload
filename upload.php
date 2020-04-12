@@ -19,7 +19,7 @@
 	if (empty($filename)) {
 		//print error and go back to previous screen.
 		echo "<script>alert('You don\'t seem to have selected a file')</script>";
-		$url = "center.php";
+		$url = "main.php";
 		echo "<script type='text/javascript'>";
 		echo "window.history.back();"; 
 		echo "</script>";
@@ -32,7 +32,7 @@
 
 	} else {
 		echo "<script>alert('Sorry, there was an error uploading your file.')</script>";
-		$url = "center.php";
+		$url = "main.php";
 		echo "<script type='text/javascript'>";
 		echo "window.location.href='$url'";
 		echo "</script>";
@@ -41,7 +41,7 @@
 
 	$sql = "INSERT INTO fileinfo(username,filename) VALUES ('$username','$filename')";
 	mysqli_query($db,$sql);
-	$url = "center.php";
+	$url = "main.php";
 	echo "<script type='text/javascript'>";
 	echo "window.location.href='$url'";
 	echo "</script>";

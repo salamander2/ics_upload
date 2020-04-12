@@ -1,0 +1,12 @@
+Make mySQL database
+
+ics_upload
+u: shichicken
+p: Bramble83#
+
+Tables:
+
+users:	username (30), fullname (50), password(255)
+fileinfo: username (30) filename(512) time(timestamp) comment (2048)
+
+[filename should include relative path]
