@@ -1,0 +1,48 @@
+<?php
+error_reporting(E_ALL);
+session_start();
+require_once('common.php');
+
+
+$username = clean_input($_POST['username']);
+$fullname = clean_input($_POST['fullname']);
+$password = $_POST["password"];
+
+$db = connectToDB();
+$sql = "SELECT username FROM users WHERE username = ?";
+if ($stmt = $db->prepare($sql)) {
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->fetch();
+    $stmt->close();
+} else {
+    $message_  = 'Invalid query: ' . mysqli_error($db) . "\n<br>";
+    $message_ .= 'SQL: ' . $sql;
+    die($message_);
+}
+$row_cnt = mysqli_num_rows($result);
+if ($row_cnt > 0) {
+	echo "<script>alert('Username already exist')</script>";
+	$url = "index.php";
+	echo "<script type='text/javascript'>";
+	echo "window.location.href='$url'";
+	echo "</script>";
+	exit;
+}
+
+$pwdhash = password_hash($password, PASSWORD_DEFAULT);
+$sql = "INSERT INTO users(username, fullname, password) VALUES('$username','$fullname','$pwdhash')";
+mysqli_query($db,$sql);
+mkdir("files/$username");
+//set session variables
+$_SESSION["username"] = $username;
+$_SESSION["pwdhash"] = $pwdhash;
+?>
+
+<script>
+alert("Registration Success! \n Username:<?php print $username?>")
+window.location.href = 'center.php'
+</script>
+
+
