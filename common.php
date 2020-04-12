@@ -4,7 +4,6 @@ error_reporting(E_ALL);
 //for production
 //error_reporting(0); ini_set('display_errors','0');
 
-//Database connection info
 require_once 'config.php';
 
 $username = $_SESSION["username"];

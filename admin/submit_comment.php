@@ -15,7 +15,7 @@
 	$sql = "update fileinfo set comment = '$comment' where username = '$username' and filename = '$filename'";
 	mysqli_query($conn,$sql);
 	print "Success";
-	$url = "index.php";
+	$url = "main_admin.php";
 	echo "<script type='text/javascript'>";
 	echo "window.location.href='$url'";
 	echo "</script>";

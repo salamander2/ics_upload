@@ -1,11 +1,6 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: desmond
- * Date: 2018-05-09
- * Time: 2:39 PM
- */
+
 header("Content-Type: text/html; charset=utf-8");
 
 if (isset($_COOKIE["admin"])){

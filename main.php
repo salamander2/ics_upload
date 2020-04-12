@@ -28,8 +28,17 @@ $data = mysqli_fetch_all($result);
 
 $directory = "./files/$username";
 //remove . and .. from directory listings
-$scanned_directory = array_diff(scandir($directory), array('..', '.'));
-
+//$scanned_directory = array_diff(scandir($directory), array('..', '.'));
+$scanned_directory = scandir($directory);
+/*
+foreach($scanned_directory as $file)
+{
+    if (!is_dir($file))
+    {
+        echo $file.'\n';
+    }
+}
+*/
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +54,10 @@ $scanned_directory = array_diff(scandir($directory), array('..', '.'));
 
 <body>
 <script>
+function confirmAction() {
+	return confirm("Are you sure");
+}
+
 function validateData() {
 	var x, text;
 	x = document.getElementById("fileToUpload").value;
@@ -99,8 +112,9 @@ foreach ($data as $item){
 	echo "<td>$filename</td>";
 	echo "<td>$path</td>";
 	echo "<td>$time</td>";
-	echo "<td><form class='d-inline' method='post' action='download.php'><input name='filename' value='$filename' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp ";
-	echo "<form class='d-inline' method='post' action='delete.php'><input name='filename' value='$filename' style='outline: none;' hidden><button class='btn btn-danger shadow'>Delete</button></form></td>";
+	echo "<td>";
+	echo "<form class='d-inline' method='post' action='download.php'><input name='filename' value='$filename' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp ";
+	echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='filename' value='$filename' style='outline: none;' hidden><button class='btn btn-danger shadow'>Delete</button></form></td>";
 	echo "<td>$comment</td>";
 	echo "<td>$mark</td>";
 	echo "</tr>";
@@ -110,8 +124,10 @@ foreach ($data as $item){
 		</table>
 	</div>
 
+TODO: add option to make folder (just one level) and upload files to that.
 <?php 
-var_dump($scanned_directory);
+//TODO: fix the path stuff
+//var_dump($scanned_directory);
 ?>
 </body>
 

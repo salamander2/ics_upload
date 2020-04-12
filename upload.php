@@ -15,7 +15,7 @@
 	$target_dir = "files/$username/";
 	$filename = $_FILES["fileToUpload"]["name"];
 
-	//TODO check for empty file before leaving previous webpage.
+	//check for empty file (this is also done before submitting the data)
 	if (empty($filename)) {
 		//print error and go back to previous screen.
 		echo "<script>alert('You don\'t seem to have selected a file')</script>";

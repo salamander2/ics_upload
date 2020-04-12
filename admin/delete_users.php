@@ -16,7 +16,7 @@
     mysqli_query($conn,$sql);
     $sql = "delete from fileinfo where username = '$username'";
     mysqli_query($conn,$sql);
-    $url = "index.php";
+    $url = "main_admin.php";
     echo "<script type='text/javascript'>";
     echo "window.location.href='$url'";
     echo "</script>";
