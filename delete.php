@@ -4,7 +4,7 @@
 
 	$filename = $_POST["filename"];
 	unlink("files/$username/$filename");
-	echo "$username/$filename Delete Successfully";
+	//echo "$username/$filename Delete Successfully";  THIS BLOCKS THE PAGE FROM GOING TO MAIN.PHP
 	$db = connectToDB();
 
 	$sql = "DELETE from fileinfo where filename= ? and username = ?";
