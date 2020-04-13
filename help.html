@@ -2,30 +2,65 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<title>UpLoader: Help</title>
-	<link rel="stylesheet" href="./resources/bootstrap.min.css">
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>ICS File Submission</title>
+    <link rel="stylesheet" href="./resources/bootstrap.min.css">
+    <link rel="stylesheet" href="./resources/touchup.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-    <button class="btn m-1 btn-outline-secondary" onclick="window.history.back()">Back</button>
-    <div class="container mt-5 w-50 ">
-		<div class="card">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">ICS File Submission</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-			<div class="card-header bg-primary text-white text-center"><b>Helpful information</b></div>
-			<div class="card-body">
-				<ul>
-                    <li>All passwords are hashed and the hash is stored, then the password is deleted</li>
-                    <li>There is no way to recover your password if you forget it. 
-                        Please email me.<br> 
-                        <i>I can move your files to a temporary location, delete your username, and then you can create your username again,
-                        and then I can move your files back.</i></li>
-                    <li>If you upload a file with the same name as an existing one, it will overwrite the existing one.<br>
-                    Comments and marks will also be lost.</li>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="help.html">Help & About <span class="sr-only">(current)</span></a>
+                    </li>
                 </ul>
+            </div>
+        </div>
+
+    </nav>
+
+    <div style="height:3vh"></div>
 
 
+    <div class="container">
+        <h1>Help & About</h1>
+        <div class="card-body">
+
+            <h3>Are my passwords kept safe?</h3>
+            <p>
+                All passwords are hashed and the hash is stored, then the password is deleted
+            </p>
+
+            <h3>I forgot my password. Now what?</h3>
+            <p>
+                All passwords are hashed and the hash is stored, then the password is deleted.
+                There is no way to recover your password if you forget it. Please email me.
+
+                <i>
+                    I can move your files to a temporary location, delete your username, and then you can create your
+                    username again, and then I can move your files back.
+                </i>
+            </p>
+
+            <h3>Can I give two files the same name?</h3>
+            <p>
+                If you upload a file with the same name as an existing one, it will overwrite the existing
+                one. <strong>Comments and marks will also be lost.</strong>
+            </p>
 </body>
+
 </html>
