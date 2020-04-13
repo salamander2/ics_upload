@@ -1,51 +1,33 @@
 <?php
 
-
-header("Content-Type: text/html; charset=utf-8");
-
-if (isset($_COOKIE["admin"])){
-	if ($_COOKIE["admin"] != "pwd"){
-		setcookie('admin', null, -1);
-		$url = "login.php";
-		echo "<script type='text/javascript'>";
-		echo "window.location.href='$url'";
-		echo "</script>";
-		exit;
-	}
-}else{
-	$url = "login.php";
-	echo "<script type='text/javascript'>";
-	echo "window.location.href='$url'";
-	echo "</script>";
-	exit;
-}
 ?>
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>Classroom: Admin</title>
-	<link rel="stylesheet" href="./resources/bootstrap.min.css">
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./resources/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-<div align="center">
-    <h3>Files Control Panel</h3>
-</div>
-<div align="center" style="padding: 5%">
-    <table class="table table-bordered">
-        <caption>Users</caption>
-        <thead>
-        <tr>
-            <th>Username</th>
-            <th>Password</th>
-            <th>TotalFiles</th>
-            <th>Delete</th>
-        </tr>
-        <?php
+    <div align="center">
+        <h3>Files Control Panel</h3>
+    </div>
+    <div align="center" style="padding: 5%">
+        <table class="table table-bordered">
+            <caption>Users</caption>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>TotalFiles</th>
+                    <th>Delete</th>
+                </tr>
+                <?php
         require_once "function.php";
         $conn = connectDB();
         $sql = "SELECT username,password from users";
@@ -67,21 +49,21 @@ if (isset($_COOKIE["admin"])){
 	        echo "</tr>";
         }
         ?>
-        </tbody>
-    </table>
-    <hr/>
-    <table class="table table-bordered">
-        <caption>Uploaded Files</caption>
-        <thead>
-        <tr>
-            <th>Username</th>
-            <th>FileName</th>
-            <th>Date</th>
-            <th>Download</th>
-            <th>Delete</th>
-            <th>Comment</th>
-        </tr>
-        <?php
+                </tbody>
+        </table>
+        <hr />
+        <table class="table table-bordered">
+            <caption>Uploaded Files</caption>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>FileName</th>
+                    <th>Date</th>
+                    <th>Download</th>
+                    <th>Delete</th>
+                    <th>Comment</th>
+                </tr>
+                <?php
         require_once "function.php";
         $conn = connectDB();
         $sql = "SELECT username,filename,time,commend from fileinfo order by username";
@@ -103,8 +85,9 @@ if (isset($_COOKIE["admin"])){
             echo "</tr>";
         }
         ?>
-        </tbody>
-    </table>
-</div>
+                </tbody>
+        </table>
+    </div>
 </body>
+
 </html>

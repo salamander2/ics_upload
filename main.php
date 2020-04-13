@@ -92,7 +92,7 @@ function validateData() {
 			<caption>Uploaded files</caption>
 				<tr>
 					<th>FileName</th>
-					<th>Path</th>
+					<th>Folder</th>
 					<th>Date</th>
 					<th></th>
 					<th>Comments</th>
@@ -132,5 +132,4 @@ TODO: add option to make folder (just one level) and upload files to that.
 //see https://hotexamples.com/examples/-/-/scandir/php-scandir-function-examples.html
 ?>
 </body>
-
 </html>
