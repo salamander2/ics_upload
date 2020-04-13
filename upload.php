@@ -26,10 +26,33 @@
 		exit;
 	}
 
+	
+	//Find if the file already exists, if so, don't create a new entry, just erase comment and mark.
+	$sql = "SELECT filename, from fileinfo WHERE username = ? AND filename = ?";
+	if ($stmt = $db->prepare($sql)) {
+		$stmt->bind_param("ss", $username, $filename);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		$stmt->fetch();
+		$stmt->close();
+	} else {
+		$message_  = 'Invalid query: ' . mysqli_error($db) . "\n<br>";
+		$message_ .= 'SQL: ' . $sql;
+		die($message_);
+	}
+
+	$row_cnt = mysqli_num_rows($result);	
+	$fileExists = true;
+	if (0 === $row_cnt) $fileExists = false;
+
+	if ($fileExists) {
+		//TODO: ask for confirmation.
+	}
+
+	//actually do the uploading
 	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 	if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 		//echo "<script>alert('The file has been successfully uploaded')</script>";
-
 	} else {
 		echo "<script>alert('Sorry, there was an error uploading your file.')</script>";
 		$url = "main.php";
@@ -39,11 +62,22 @@
 		exit;
 	}
 
-	$sql = "INSERT INTO fileinfo(username,filename) VALUES ('$username','$filename')";
-	mysqli_query($db,$sql);
-	$url = "main.php";
-	echo "<script type='text/javascript'>";
-	echo "window.location.href='$url'";
-	echo "</script>";
-	exit;
+	if ($fileExists) {
+		//TODO: remove comment and mark
+		exit;
+	}
+
+	//add new entry to database
+	$sql = "INSERT INTO fileinfo(filename, username) VALUES (?,?)";
+	if ($stmt = $db->prepare($sql)) {
+		$stmt->bind_param("ss", $filename, $username);
+		$stmt->execute();
+		$stmt->close();
+	} else {
+		$message_  = 'Invalid query: ' . mysqli_error($db) . "\n<br>";
+		$message_ .= 'SQL: ' . $sql;
+		die($message_);
+	}
+	header('Location:main.php');
+	
 ?>

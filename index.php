@@ -65,7 +65,7 @@ if(isset($_POST['submit'])) {
 
 <head>
 	<meta charset="utf-8">
-	<title>Classroom</title>
+	<title>File Uploader</title>
 	<link rel="stylesheet" href="./resources/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<!--    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>-->
@@ -106,7 +106,7 @@ if(isset($_POST['submit'])) {
 			return true;
 		}
 	</script>
-
+	<a href="help.html"><button class="btn m-1 btn-outline-primary ">Help</button></a>
 	<div class="container mt-5 w-50 text-center">
 		<h2>Welcome to the <b>File Upload Centre</b></h2>
 		<div id="error_message"></div>
@@ -144,7 +144,7 @@ if(isset($_POST['submit'])) {
 						</div>
 						<!-- /.col -->
 						<div class="col-4">
-							<a href="too-bad4U.html">I forgot my password</a>
+							<a href="help.html">I forgot my password</a>
 						</div>
 						<!-- /.col -->
 					</div>

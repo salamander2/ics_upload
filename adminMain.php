@@ -28,9 +28,7 @@
                     <th>Delete</th>
                 </tr>
                 <?php
-        require_once "function.php";
-        $conn = connectDB();
-        $sql = "SELECT username,password from users";
+        $sql = "SELECT username from users";
         $result = mysqli_query($conn,$sql);
         $response = mysqli_fetch_all($result);
         //	        print_r($response);

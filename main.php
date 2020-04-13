@@ -26,19 +26,16 @@ if ($stmt = $db->prepare($sql)) {
 
 $data = mysqli_fetch_all($result);
 
-$directory = "./files/$username";
+/* Find all (top level) folders for this user */
+$dir = "./files/$username/";
 //remove . and .. from directory listings
-//$scanned_directory = array_diff(scandir($directory), array('..', '.'));
-$scanned_directory = scandir($directory);
-/*
+$scanned_directory = array_diff(scandir($dir), array('..', '.'));
+$folders = array();
 foreach($scanned_directory as $file)
 {
-    if (!is_dir($file))
-    {
-        echo $file.'\n';
-    }
+	if (is_dir($dir.$file)) $folders[]=$file;
 }
-*/
+
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +43,7 @@ foreach($scanned_directory as $file)
 
 <head>
 	<meta charset="utf-8">
-	<title>Classroom <?= $username?></title>
+	<title>File Uploader  <?= $username?></title>
 	<link rel="stylesheet" href="./resources/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -71,17 +68,21 @@ function validateData() {
 	return true;
 }
 </script>
+	<a href="help.html"><button class="btn m-1 btn-outline-primary ">Help</button></a>
 	<div class="container my-2">
 		<div class="card Xtext-center bg-secondary my-2 py-2">
-			<h3 class="text-center text-white">Hello <?php echo $fullname?> <button class="btn float-right btn-warning mr-2 shadow" onclick="location.href='logout.php'">Logout</button></h3>
+			<h3 class="text-center text-white">Hello <?php echo $fullname?> 
+			<button class="btn float-right btn-warning mr-2 shadow" onclick="location.href='logout.php'">Logout</button></h3>
 			<form action="upload.php" method="post" enctype="multipart/form-data">
 			<div class="row  mx-2">
     			<div class="col-sm-4">
-				<input class="btn btn-primary shadow" type="file" name="fileToUpload" id="fileToUpload">
+				<input class="btn btn-primary shadow pb-1" type="file" name="fileToUpload" id="fileToUpload">
 				</div>
-    			<div class="col-sm-4"></div>
+    			<div class="col-sm-3">
+				<input type="text" name="username" id="username" class="pb-2" placeholder="Save in folder (name)">
+					</div> 
     			<div class="col-sm-4">
-				<input class="btn btn-success shadow" type="submit" value="Upload chosen file" name="submit" onclick="return validateData()">
+				<input class="btn btn-success shadow pb-2" type="submit" value="Upload chosen file" name="submit" onclick="return validateData()">
 				</div>
 			</div>
 			</form>
@@ -89,7 +90,6 @@ function validateData() {
 		<div id="error_message"></div>
 		<div class="text-secondary">Uploaded files</div>
 		<table class="table table-bordered">
-			<caption>Uploaded files</caption>
 				<tr>
 					<th>FileName</th>
 					<th>Folder</th>
@@ -122,11 +122,14 @@ foreach ($data as $item){
 
 ?>
 		</table>
-	</div>
 
-TODO: add option to make folder (just one level) and upload files to that.
+		<button class="btn btn-success mr-2 shadow" onclick="location.href='logout.php'">Create folder</button>
+	</div>
+<p>List of folders:</p>
 <?php 
-//TODO: fix the path stuff
+foreach ($folders as $f) {
+	echo $f."<br>";
+}
 //var_dump($scanned_directory);
 
 //see https://hotexamples.com/examples/-/-/scandir/php-scandir-function-examples.html
