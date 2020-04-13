@@ -128,6 +128,8 @@ TODO: add option to make folder (just one level) and upload files to that.
 <?php 
 //TODO: fix the path stuff
 //var_dump($scanned_directory);
+
+//see https://hotexamples.com/examples/-/-/scandir/php-scandir-function-examples.html
 ?>
 </body>
 
