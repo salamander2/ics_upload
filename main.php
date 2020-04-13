@@ -68,7 +68,7 @@ function validateData() {
 		document.getElementById("error_message").innerHTML = text;
 		return false;
 	}
-	return false;
+	return true;
 }
 </script>
 	<div class="container my-2">
