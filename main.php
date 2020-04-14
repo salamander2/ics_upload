@@ -43,63 +43,75 @@ foreach($scanned_directory as $file)
 
 <head>
 	<meta charset="utf-8">
-	<title>File Uploader  <?= $username?></title>
+	<title>File Uploader <?= $username?></title>
 	<link rel="stylesheet" href="./resources/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-<script>
-function confirmAction() {
-	return confirm("Are you sure");
-}
+	<script>
+		function confirmAction() {
+			return confirm("Are you sure");
+		}
 
-function validateData() {
-	var x, text;
-	x = document.getElementById("fileToUpload").value;
-	if (!x || 0 === x.length) {
-		text = "You must choose a file";
-		//text = "<div class=\"error\">" + text + "</div>";
-		document.getElementById("error_message").outerHTML = '<div id="error_message" class="alert alert-danger w-50"></div>';
-		document.getElementById("error_message").innerHTML = text;
-		return false;
-	}
-	return true;
-}
-</script>
+		function validateData() {
+			var x, text;
+			x = document.getElementById("fileToUpload").value;
+			if (!x || 0 === x.length) {
+				text = "You must choose a file";
+				//text = "<div class=\"error\">" + text + "</div>";
+				document.getElementById("error_message").outerHTML =
+					'<div id="error_message" class="alert alert-danger w-50"></div>';
+				document.getElementById("error_message").innerHTML = text;
+				return false;
+			}
+			return true;
+		}
+	</script>
 	<a href="help.html"><button class="btn m-1 btn-outline-primary ">Help</button></a>
 	<div class="container my-2">
 		<div class="card Xtext-center bg-secondary my-2 py-2">
-			<h3 class="text-center text-white">Hello <?php echo $fullname?> 
-			<button class="btn float-right btn-warning mr-2 shadow" onclick="location.href='logout.php'">Logout</button></h3>
+			<h3 class="text-center text-white">Hello <?php echo $fullname?>
+				<button class="btn float-right btn-warning mr-2 shadow"
+					onclick="location.href='logout.php'">Logout</button></h3>
 			<form action="upload.php" method="post" enctype="multipart/form-data">
-			<div class="row  mx-2">
-    			<div class="col-sm-4">
-				<input class="btn btn-primary shadow pb-1" type="file" name="fileToUpload" id="fileToUpload">
+				<div class="row mx-2">
+					<div class="col-md-4 overflow-hidden">
+						<input class="btn btn-primary shadow pb-1" type="file" name="fileToUpload" id="fileToUpload">
+					</div>
+					<div class="col-md-4 btn btn-outline-info pb-0">
+						<label for="options">Select folder</label>
+						<select id="options">
+							<option value="none" selected="selected">none</option>
+							<?php
+							foreach($folders as $f) {
+								echo '<option value="'.$f.'">'.$f.'</option>';
+							}
+							?>
+						</select>
+						<!-- <input type="text" name="username" id="username" class="pb-2" placeholder="Save in folder (name)"> -->
+					</div>
+					<div class="col-md-4">
+						<input class="btn btn-success shadow pb-2" type="submit" value="Upload chosen file"
+							name="submit" onclick="return validateData()">
+					</div>
 				</div>
-    			<div class="col-sm-3">
-				<input type="text" name="username" id="username" class="pb-2" placeholder="Save in folder (name)">
-					</div> 
-    			<div class="col-sm-4">
-				<input class="btn btn-success shadow pb-2" type="submit" value="Upload chosen file" name="submit" onclick="return validateData()">
-				</div>
-			</div>
 			</form>
 		</div>
 		<div id="error_message"></div>
 		<div class="text-secondary">Uploaded files</div>
 		<table class="table table-bordered">
-				<tr>
-					<th>FileName</th>
-					<th>Folder</th>
-					<th>Date</th>
-					<th></th>
-					<th>Comments</th>
-					<th>Marked?</th>
-				</tr>
+			<tr>
+				<th>FileName</th>
+				<th>Folder</th>
+				<th>Date</th>
+				<th></th>
+				<th>Comments</th>
+				<th>Marked?</th>
+			</tr>
 
-<?php
+			<?php
 
 //filename,path,time,comment,mark
 foreach ($data as $item){
@@ -122,17 +134,36 @@ foreach ($data as $item){
 
 ?>
 		</table>
-
-		<button class="btn btn-success mr-2 shadow" onclick="location.href='logout.php'">Create folder</button>
+		<div class="text-secondary">Folders</div>
+		<table class="table table-bordered">
+			<tr>
+				<td>
+					<?php 
+					if (count($folders) == 0) echo "-- none --";
+					foreach ($folders as $f) {
+						echo "&bull; ".$f."<br>";
+					}
+					?>
+				</td>
+			</tr>
+		</table>
+		<div id="folderForm" class="d-none">
+			<form method='post' action='createFolder.php'>
+				<div class="row input-group ml-0">
+					<input type="text" name="folder" id="folder" class="col-4 form-control" placeholder="Enter folder name">
+					<input type="submit" class="btn btn-outline-success mr-2 shadow" value="Create folder">
+				</div>
+			</form>
+		</div>
+		<button id="folderBtn" class="btn btn-outline-secondary mr-2 shadow" onclick="displayForm()">Create folder</button>
 	</div>
-<p>List of folders:</p>
-<?php 
-foreach ($folders as $f) {
-	echo $f."<br>";
-}
-//var_dump($scanned_directory);
-
-//see https://hotexamples.com/examples/-/-/scandir/php-scandir-function-examples.html
-?>
+	<script>
+	function displayForm() {
+		document.getElementById("folderBtn").outerHTML = '<div id="folderBtn" class="d-none"></div>';		
+		document.getElementById("folderForm").classList.remove('d-none');
+		document.getElementById("folderForm").classList.add('d-block');
+	}
+	</script>
 </body>
+
 </html>

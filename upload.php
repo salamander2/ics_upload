@@ -19,16 +19,15 @@
 	if (empty($filename)) {
 		//print error and go back to previous screen.
 		echo "<script>alert('You don\'t seem to have selected a file')</script>";
-		$url = "main.php";
-		echo "<script type='text/javascript'>";
+		echo "<script'>";
 		echo "window.history.back();"; 
-		echo "</script>";
+		echo "</script'>";
 		exit;
 	}
 
 	
 	//Find if the file already exists, if so, don't create a new entry, just erase comment and mark.
-	$sql = "SELECT filename, from fileinfo WHERE username = ? AND filename = ?";
+	$sql = "SELECT filename from fileinfo WHERE username = ? AND filename = ?";
 	if ($stmt = $db->prepare($sql)) {
 		$stmt->bind_param("ss", $username, $filename);
 		$stmt->execute();
@@ -46,7 +45,10 @@
 	if (0 === $row_cnt) $fileExists = false;
 
 	if ($fileExists) {
-		//TODO: ask for confirmation.
+		echo "<!DOCTYPE html><sc2ddript>";
+		echo 'ans = confirm("This file already exists, do you want to overwrite it?")';
+		echo 'if (ans == false) window.location.href="main.php";';
+		echo "</script>";
 	}
 
 	//actually do the uploading
@@ -63,7 +65,18 @@
 	}
 
 	if ($fileExists) {
-		//TODO: remove comment and mark
+//		die("exists");
+		$sql = "UPDATE fileinfo SET comment='', mark='', time=now() WHERE username = ? AND filename = ?";
+		if ($stmt = $db->prepare($sql)) {
+			$stmt->bind_param("ss", $username, $filename);
+			$stmt->execute();
+			$stmt->close();
+		} else {
+				$message_  = 'Invalid query: ' . mysqli_error($db) . "\n<br>";
+				$message_ .= 'SQL: ' . $sql;
+				die($message_);
+		}
+		header("Location: main.php");
 		exit;
 	}
 
