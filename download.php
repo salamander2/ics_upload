@@ -4,6 +4,7 @@ require_once('common.php');
 
 //TODO get the filename and path from the SQL database based on $id
 
+$id = $_POST["id"];
 $filename = $_POST["filename"];
 $file_url = "files/$username/$filename";
 header('Content-Type: application/octet-stream');

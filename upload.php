@@ -12,11 +12,14 @@ if (empty($username)) {
 	echo "</script>";
 	exit;
 }
-$target_dir = "files/$username/";
+
 $filename = $_FILES["fileToUpload"]["name"];
 $foldername = $_POST['foldername'];
 if ($foldername == "none") $foldername = '';
-if (!empty($foldername)) $target_dir = $target_dir.$foldername.'/';
+if (empty($foldername))
+	$target_dir = "files/$username/";
+else
+	$target_dir = "files/$username/$foldername/";
 
 //check for empty file (this is also done before submitting the data)
 if (empty($filename)) {
@@ -28,14 +31,14 @@ if (empty($filename)) {
 	exit;
 }
 
-//TODO: what happens with two files with the same name in different folders. Does it work?
 
 //Find if the file already exists, if so, don't create a new entry, just erase comment and mark.
 
-
 //Need two versions of this depending if path is empty or not.
+//TODO: get the $id if the file exists and use that later on so that you don't need two cases (IF)
 if (empty($foldername)) {
-	$sql = "SELECT filename from fileinfo WHERE username = ? AND filename = ?";
+	$sql = "SELECT filename from fileinfo WHERE username = ? AND filename = ? AND (path IS NULL OR path = '')";
+	echo $sql;
 	if ($stmt = $db->prepare($sql)) {
 		$stmt->bind_param("ss", $username, $filename);
 		$stmt->execute();
@@ -49,6 +52,7 @@ if (empty($foldername)) {
 	}
 } else {
 	$sql = "SELECT filename from fileinfo WHERE username = ? AND filename = ? AND path = ?";
+	echo $sql;
 	if ($stmt = $db->prepare($sql)) {
 		$stmt->bind_param("sss", $username, $filename, $foldername);
 		$stmt->execute();
@@ -70,6 +74,7 @@ if ($fileExists) {
 	echo 'ans = confirm("This file already exists, do you want to overwrite it?")';
 	echo 'if (ans == false) window.location.href="main.php";';
 	echo "</script>";
+	die("duplicate upload problem");
 	//	exit;	//TODO: find a way to reload this program with the authorization to continue the upload of a duplicate file.
 }
 
@@ -87,7 +92,6 @@ if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 }
 
 if ($fileExists) {
-	//		die("exists");
 	$sql = "UPDATE fileinfo SET comment='', mark='', time=now() WHERE username = ? AND filename = ? AND path = ?";
 	if ($stmt = $db->prepare($sql)) {
 		$stmt->bind_param("sss", $username, $filename, $foldername);
