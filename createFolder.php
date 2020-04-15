@@ -8,4 +8,6 @@
 	mkdir("files/$username/$folder");
 
 	header('Location:main.php');
+
+	//TODO: what happens if the folder is already created?
 ?>

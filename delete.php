@@ -2,6 +2,7 @@
 	session_start();
 	require_once('common.php');
 
+//TODO get the filename and path from the SQL database based on $id
 	$filename = $_POST["filename"];
 	unlink("files/$username/$filename");
 	//echo "$username/$filename Delete Successfully";  THIS BLOCKS THE PAGE FROM GOING TO MAIN.PHP

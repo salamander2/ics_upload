@@ -54,8 +54,9 @@ if(isset($_POST['submit'])) {
 
 		if ($username == ADMINUSER) {
 			header('Location:adminMain.php');
+		} else {
+			header('Location:main.php');
 		}
-		 header('Location:main.php');
 	}
 }
 

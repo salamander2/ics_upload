@@ -11,7 +11,7 @@ if (empty($username)) header("Location: logout.php");
 //echo $pwdhash."<br>";
 $db = connectToDB();
 $error_message = "";
-$sql = "SELECT filename,path,time,comment,mark from fileinfo WHERE username = ?";
+$sql = "SELECT id,filename,path,time,comment,mark from fileinfo WHERE username = ?";
 if ($stmt = $db->prepare($sql)) {
 	$stmt->bind_param("s", $username);
 	$stmt->execute();
@@ -80,9 +80,9 @@ foreach($scanned_directory as $file)
 					<div class="col-md-4 overflow-hidden">
 						<input class="btn btn-primary shadow pb-1" type="file" name="fileToUpload" id="fileToUpload">
 					</div>
-					<div class="col-md-4 btn btn-outline-info pb-0">
-						<label for="options">Select folder</label>
-						<select id="options">
+					<div class="col-md-4 btn btn-outline-info text-white pb-0">
+						<label for="foldername">Select folder: </label>
+						<select id="foldername" name="foldername">
 							<option value="none" selected="selected">none</option>
 							<?php
 							foreach($folders as $f) {
@@ -115,18 +115,19 @@ foreach($scanned_directory as $file)
 
 //filename,path,time,comment,mark
 foreach ($data as $item){
-	$filename = $item[0];
-	$path = $item[1];
-	$time = $item[2];
-	$comment = $item[3];
-	$mark = $item[4];
+	$id = $item[0];
+	$filename = $item[1];
+	$path = $item[2];
+	$time = $item[3];
+	$comment = $item[4];
+	$mark = $item[5];
 	echo "<tr>";
 	echo "<td>$filename</td>";
 	echo "<td>$path</td>";
 	echo "<td>$time</td>";
 	echo "<td>";
-	echo "<form class='d-inline' method='post' action='download.php'><input name='filename' value='$filename' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp ";
-	echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='filename' value='$filename' style='outline: none;' hidden><button class='btn btn-danger shadow'>Delete</button></form></td>";
+	echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp ";
+	echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden><button class='btn btn-danger shadow'>Delete</button></form></td>";
 	echo "<td>$comment</td>";
 	echo "<td>$mark</td>";
 	echo "</tr>";
