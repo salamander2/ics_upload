@@ -3,7 +3,11 @@
     require_once('common.php');
     $db = connectToDB();
 
-    //TODO make sure that this is the admin user!
+    //make sure that this is the admin user!
+    if ($username != ADMINUSER) {
+        header("Location: main.php");
+    }
+
     //get all of the users
     $sql = "SELECT username,fullname from users";
     $result=runSimpleQuery($db,$sql);

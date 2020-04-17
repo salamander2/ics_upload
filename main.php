@@ -78,7 +78,8 @@ foreach($scanned_directory as $file)
 			<h3 class="text-center text-white">Hello <?php echo $fullname?>
 				<button class="btn float-right btn-warning mr-2 shadow"
 					onclick="location.href='logout.php'">Logout</button></h3>
-			<form action="upload.php" method="post" enctype="multipart/form-data">
+
+			<form action="preUpload.php" method="post" enctype="multipart/form-data">
 				<div class="row mx-2">
 					<div class="col-md-4 overflow-hidden">
 						<input class="btn btn-primary shadow pb-1" type="file" name="fileToUpload" id="fileToUpload">
