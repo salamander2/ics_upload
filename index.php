@@ -3,7 +3,8 @@ session_start();
 require_once('common.php');
 
 if (isset($username)){
-//TODO: if a user comes to this page, log him out automatically.
+	$username = "";
+	$_SESSION["username"] = "";
 }
 
 //TODO: Add in a connect time, that's udpdated for every action. If the connect time is more than 6 hours old, logout the user.
@@ -119,7 +120,7 @@ if(isset($_POST['submit'])) {
 
 				<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" onsubmit="return validateData()">
 					<div class="input-group mb-3">
-						<input type="text" name="username" id="username" class="form-control" placeholder="Username">
+						<input type="text" name="username" id="username" class="form-control" placeholder="Username" autofocus>
 						<div class="input-group-append">
 							<div class="input-group-text">
 								<span class="fa fa-envelope"></span>

@@ -9,5 +9,4 @@
 
 	header('Location:main.php');
 
-	//TODO: what happens if the folder is already created?
-?>
+	//what happens if the folder is already created? Nothing.

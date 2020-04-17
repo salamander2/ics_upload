@@ -3,8 +3,9 @@
     require_once('common.php');
     $db = connectToDB();
 
+    //TODO make sure that this is the admin user!
     //get all of the users
-	$sql = "SELECT username,fullname from users";
+    $sql = "SELECT username,fullname from users";
     $result=runSimpleQuery($db,$sql);
     $response = mysqli_fetch_all($result);
 

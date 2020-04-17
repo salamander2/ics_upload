@@ -37,8 +37,7 @@ if (empty($filename)) {
 //Need two versions of this depending if path is empty or not.
 //TODO: get the $id if the file exists and use that later on so that you don't need two cases (IF)
 if (empty($foldername)) {
-	$sql = "SELECT filename from fileinfo WHERE username = ? AND filename = ? AND (path IS NULL OR path = '')";
-	echo $sql;
+	$sql = "SELECT id from fileinfo WHERE username = ? AND filename = ? AND (path IS NULL OR path = '')";
 	if ($stmt = $db->prepare($sql)) {
 		$stmt->bind_param("ss", $username, $filename);
 		$stmt->execute();
@@ -51,8 +50,7 @@ if (empty($foldername)) {
 		die($message_);
 	}
 } else {
-	$sql = "SELECT filename from fileinfo WHERE username = ? AND filename = ? AND path = ?";
-	echo $sql;
+	$sql = "SELECT id from fileinfo WHERE username = ? AND filename = ? AND path = ?";
 	if ($stmt = $db->prepare($sql)) {
 		$stmt->bind_param("sss", $username, $filename, $foldername);
 		$stmt->execute();
@@ -65,7 +63,9 @@ if (empty($foldername)) {
 		die($message_);
 	}
 }
+
 $row_cnt = mysqli_num_rows($result);	
+
 $fileExists = true;
 if (0 === $row_cnt) $fileExists = false;
 
@@ -131,5 +131,3 @@ if (empty($foldername)) {
 	}
 }
 header('Location:main.php');
-
-?>

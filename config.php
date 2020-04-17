@@ -17,4 +17,3 @@ define( 'DB_COLLATE', '' );
 $home="index.php";
 $directory=".";
 define('ADMINUSER','adminnimda');
-?>

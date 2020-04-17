@@ -2,13 +2,9 @@
 session_start();
 require_once "common.php";
 
-
 //Check if logged in. If not, redirect to index.php 
-if (empty($username)) header("Location: logout.php");
+if (!isset($username) || empty($username)) header("Location: logout.php");
 
-//echo $username;
-//echo $fullname;
-//echo $pwdhash."<br>";
 $db = connectToDB();
 $error_message = "";
 $sql = "SELECT id,filename,path,time,comment,mark from fileinfo WHERE username = ?";
@@ -68,6 +64,13 @@ foreach($scanned_directory as $file)
 			}
 			return true;
 		}
+		function validateData2() {
+			var x;
+			x = document.getElementById("folder").value;
+			if (!x || 0 === x.length) return false;
+			return true;
+		}
+
 	</script>
 	<a href="help.html"><button class="btn m-1 btn-outline-primary ">Help</button></a>
 	<div class="container my-2">
@@ -113,28 +116,31 @@ foreach($scanned_directory as $file)
 
 			<?php
 
-//filename,path,time,comment,mark
-foreach ($data as $item){
-	$id = $item[0];
-	$filename = $item[1];
-	$path = $item[2];
-	$time = $item[3];
-	$comment = $item[4];
-	$mark = $item[5];
-	echo "<tr>";
-	echo "<td>$filename</td>";
-	echo "<td>$path</td>";
-	echo "<td>$time</td>";
-	echo "<td>";
-	echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp ";
-	echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden><button class='btn btn-danger shadow'>Delete</button></form></td>";
-	echo "<td>$comment</td>";
-	echo "<td>$mark</td>";
-	echo "</tr>";
-}
+			//filename,path,time,comment,mark
+			foreach ($data as $item){
+				$id = $item[0];
+				$filename = $item[1];
+				$path = $item[2];
+				$time = $item[3];
+				$comment = $item[4];
+				$mark = $item[5];
+				echo "<tr>";
+				echo "<td>$filename</td>";
+				echo "<td>$path</td>";
+				echo "<td>$time</td>";
+				echo "<td>";
+				echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp ";
+				echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden><button class='btn btn-danger shadow'>Delete</button></form></td>";
+				echo "<td>$comment</td>";
+				echo "<td>$mark</td>";
+				echo "</tr>";
+			}
 
-?>
+			?>
 		</table>
+
+		<div class="row">
+		<div class="col-md-6">
 		<div class="text-secondary">Folders</div>
 		<table class="table table-bordered">
 			<tr>
@@ -148,8 +154,28 @@ foreach ($data as $item){
 				</td>
 			</tr>
 		</table>
+
+		</div>
+		<div class="col-md-6">
+			<div class="card border-success">
+			<div class="card-header">Checklist for Java programs before uploading</div>
+			<div class="card-body">
+			<div class="card-text">
+			<ul type="square">
+			<li>comment at top with your name, date and purpose of program
+			<li>class names are uppercase
+			<li>variable names are lowercase
+			<li>method names are lower case 
+			<li>program is indented correctly
+			</ul>
+			</div>
+			</div>
+			</div>
+
+		</div>
+		</div>
 		<div id="folderForm" class="d-none">
-			<form method='post' action='createFolder.php'>
+			<form method='post' action='createFolder.php' onsubmit="return validateData2()">
 				<div class="row input-group ml-0">
 					<input type="text" name="folder" id="folder" class="col-4 form-control" placeholder="Enter folder name">
 					<input type="submit" class="btn btn-outline-success mr-2 shadow" value="Create folder">

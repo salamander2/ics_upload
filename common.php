@@ -54,4 +54,3 @@ function clean_input($string) {
     return $string;
 }  
 
-?>
