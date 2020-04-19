@@ -41,7 +41,7 @@ if(isset($_POST['submit'])) {
 	$row_cnt = mysqli_num_rows($result);
 	// die($row_cnt);
 	if (0 === $row_cnt) {		
-		$error_message = "That user does not exist";
+		$error_message = "That user does not exist. Please register.";
 	} elseif (!password_verify ($password, $pwdHash )) {
 		$error_message = "Invalid password";
 	}

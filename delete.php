@@ -4,7 +4,6 @@
 	$db = connectToDB();
 
 	$id = $_POST["id"];
-
 	$sql = "SELECT filename, path FROM fileinfo WHERE id = $id";
 	$result = runSimpleQuery($db,$sql);
 	$response = mysqli_fetch_row($result);
@@ -21,4 +20,8 @@
 	$sql = "DELETE from fileinfo where id = $id";
 	runSimpleQuery($db,$sql);
 
-	header('Location:main.php');
+	if ($username == ADMINUSER) {
+		header('Location:adminMain.php');
+	} else {
+		header('Location:main.php');
+	}

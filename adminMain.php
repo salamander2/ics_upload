@@ -27,14 +27,16 @@
 </head>
 
 <body>
-    <div align="center">
-        <h3>Files Control Panel</h3>
-    </div>
-    LOGOUT<br>ADD MARK
-    <div align="center" style="padding: 5%">
-    <h2>Users</h2>
-        <table class="table table-bordered">
-            <thead>
+    <div class="container my-2">
+        <div class="card bg-secondary pt-3 my-2 py-2">
+            <h3 class="text-center text-white">Hello <?php echo $fullname?> <button class="btn float-right btn-warning mr-2 shadow" onclick="location.href='logout.php'">Logout</button></h3>
+            <div class="card mx-4 my-2 pt-2 bg-primary text-center text-white">
+            <h3>Files Control Panel</h3>
+            </div>
+        </div>
+        <div align="center">
+            <h2>Users</h2>
+            <table class="table table-bordered">
                 <tr>
                     <th>User name</th>
                     <th>Full name</th>
@@ -42,58 +44,76 @@
                     <th>Delete</th>
                 </tr>
                 <?php
-        //	        print_r($response);
+                
         foreach ($response as $item){
-            $username = $item[0];
+            $user = $item[0];
             $fullname = $item[1];
-            //TODO change to PDO / prepared statments
-            $sql = "select count(filename) from fileinfo where username = '$username'";
-            $result = mysqli_query($db,$sql);
-            $response = mysqli_fetch_assoc($result);
-            $count = $response["count(filename)"];
+
+            if ($user == ADMINUSER) continue;
+            $sql = "SELECT COUNT(filename) FROM fileinfo WHERE username = ?";
+            if ($stmt = $db->prepare($sql)) {
+                $stmt->bind_param("s", $user);
+                $stmt->bind_result($count);
+                $stmt->execute();
+                $stmt->fetch();
+                $stmt->close();
+            } else {
+                $message_  = 'Invalid query: ' . mysqli_error($db) . "\n<br>";
+                $message_ .= 'SQL: ' . $sql;
+                die($message_);
+            }
+
             echo "<tr>";
-            echo "<td>$username</td>";
+            echo "<td>$user</td>";
             echo "<td>$fullname</td>";
             echo "<td>$count</td>";
-	        echo "<td><form method='post' action='delete_users.php'><input name='username' value='$username' style='outline: none;' hidden><button>Delete</button></form></td>";
+            //TODO add in a confirm!
+	        echo "<td><form method='post' action='adminDeleteUser.php'><input name='user' value='$user' style='outline: none;' hidden><button>Delete</button></form></td>";
 	        echo "</tr>";
         }
         ?>
-                </tbody>
-        </table>
-        <H2>Uploaded Files</H2>
-        <table class="table table-bordered">
-            <thead>
+            </table>
+
+            <div id="error_message"></div>
+            <H2>Uploaded Files</H2>
+            <table class="table table-bordered">
                 <tr>
                     <th>Username</th>
-                    <th>FileName (with path)</th>
+                    <th>Filename with path</th>
                     <th>Date</th>
-                    <th>Download/Delete</th>
-                    <th>Comment</th>
+                    <th></th>
+                    <th>Comments</th>
+                    <th>Marked?</th>
                 </tr>
+
                 <?php
-        $sql = "SELECT username,path,filename,time,comment from fileinfo order by username";
+        $sql = "SELECT id, username, path, filename, time, comment, mark from fileinfo order by username";
         $result = mysqli_query($db,$sql);
-        $response = mysqli_fetch_all($result);
-        //	        print_r($response);
-        foreach ($response as $item){
-            $username = $item[0];
-            $path = $item[1];
-            $filename = $item[2];
-            $time = $item[3];
-            $commend = $item[4];
+        $stmt->execute();
+        while($row = $result->fetch_assoc()) {
+            $id = $row['id'];
+            $user = $row['username'];
+            $path = $row['path'];
+            $filename = $row['filename'];
+            $time = $row['time'];
+            $comment = $row['comment'];
+            $mark = $row['mark'];
+
             echo "<tr>";
-            echo "<td>$username</td>";
+            echo "<td>$user</td>";
             echo "<td>$path/$filename</td>";
             echo "<td>$time</td>";
-            echo "<td><form method='post' action='download.php'><input name='filename' value='$username-$filename' hidden><button>Download</button></form></td>";
-            echo "<td><form method='post' action='delete.php'><input name='filename' value='$username-$filename' style='outline: none;' hidden><button>Delete</button></form></td>";
-            echo "<td>$comment <form method='post' action='comment.php'><input name='filename' value='$username-$filename' style='outline: none;' hidden><button>Edit</button></form></td>";
+            echo "<td>";
+			echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp; ";
+			echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden><button class='btn btn-danger shadow'>Delete</button></form></td>";
+            echo "<td>$comment <form method='post' action='comment.php'><input name='fe' hidden><button>Edit</button></form></td>";
+            echo "<td></td>";
             echo "</tr>";
         }
         ?>
-                </tbody>
-        </table>
+            </table>
+
+        </div>
     </div>
 </body>
 

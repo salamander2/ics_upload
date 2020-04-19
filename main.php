@@ -7,7 +7,7 @@ if (!isset($username) || empty($username)) header("Location: logout.php");
 
 $db = connectToDB();
 $error_message = "";
-$sql = "SELECT id,filename,path,time,comment,mark from fileinfo WHERE username = ?";
+$sql = "SELECT id,filename,path,time,comment,mark FROM fileinfo WHERE username = ?";
 if ($stmt = $db->prepare($sql)) {
 	$stmt->bind_param("s", $username);
 	$stmt->execute();
@@ -46,12 +46,13 @@ foreach($scanned_directory as $file)
 </head>
 
 <body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script>
 		function confirmAction() {
 			return confirm("Are you sure");
 		}
 
-		function validateData() {
+		function validateFileData() {
 			var x, text;
 			x = document.getElementById("fileToUpload").value;
 			if (!x || 0 === x.length) {
@@ -62,15 +63,65 @@ foreach($scanned_directory as $file)
 				document.getElementById("error_message").innerHTML = text;
 				return false;
 			}
-			return true;
+			/* Now check if it is a duplicate file */
+			//I can't make this a separate function as it ends too soon. ajax is not blocking output
+			var filename, foldername;
+			filename = document.getElementById("fileToUpload").value;
+			foldername = document.getElementById("foldername").value;
+			ajaxResult = "none";
+			$.ajax({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				type: "POST",
+				async: true,
+				url: 'checkDuplicateFile.php',
+				data: {
+					file: filename,
+					folder: foldername
+				},
+				timeout:3000,
+				dataType: "json",
+				// contentType: "application/json",     //this totally messes up data transfer
+				success: function (msg, status, jqXhr) {
+					//alert('status ' + status);
+					msg = JSON.parse(msg);
+					// msg = JSON.parse(msg.responseText);
+					alert("msg="+msg);
+					if (msg.status === 'true' || msg === 'true') {
+						ajaxResult = "true";
+						return false;
+						//window.location = "/lockers/homeroom/" + coursecode;
+						var x = confirm("This FILE already exists. Do you want to overwrite it?");
+					} else if (msg == "false") {
+						confirmAction();
+						ajaxResult = "false";
+						alert("NOT a duplicate file");
+						return false;
+					} else {
+						ajaxResult = "error";
+						alert("A strange error has happened. check duplicate files. JSON." + msg);
+						return true;
+					}
+				},
+				error: function (err) {
+					alert('The ajax query did not run. Error: ' + err);
+					console.log(err);
+					return false;
+				}
+			});
+			alert("AJAX:"+ajaxResult);
 		}
-		function validateData2() {
+
+
+
+
+		function validateFolder() {
 			var x;
 			x = document.getElementById("folder").value;
 			if (!x || 0 === x.length) return false;
 			return true;
 		}
-
 	</script>
 	<a href="help.html"><button class="btn m-1 btn-outline-primary ">Help</button></a>
 	<div class="container my-2">
@@ -98,7 +149,7 @@ foreach($scanned_directory as $file)
 					</div>
 					<div class="col-md-4">
 						<input class="btn btn-success shadow pb-2" type="submit" value="Upload chosen file"
-							name="submit" onclick="return validateData()">
+							name="submit" onclick="return validateFileData()">
 					</div>
 				</div>
 			</form>
@@ -130,7 +181,7 @@ foreach($scanned_directory as $file)
 				echo "<td>$path</td>";
 				echo "<td>$time</td>";
 				echo "<td>";
-				echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp ";
+				echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp; ";
 				echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden><button class='btn btn-danger shadow'>Delete</button></form></td>";
 				echo "<td>$comment</td>";
 				echo "<td>$mark</td>";
@@ -141,56 +192,58 @@ foreach($scanned_directory as $file)
 		</table>
 
 		<div class="row">
-		<div class="col-md-6">
-		<div class="text-secondary">Folders</div>
-		<table class="table table-bordered">
-			<tr>
-				<td>
-					<?php 
+			<div class="col-md-6">
+				<div class="text-secondary">Folders</div>
+				<table class="table table-bordered">
+					<tr>
+						<td>
+							<?php 
 					if (count($folders) == 0) echo "-- none --";
 					foreach ($folders as $f) {
 						echo "&bull; ".$f."<br>";
 					}
 					?>
-				</td>
-			</tr>
-		</table>
+						</td>
+					</tr>
+				</table>
 
-		</div>
-		<div class="col-md-6">
-			<div class="card border-success">
-			<div class="card-header">Checklist for Java programs before uploading</div>
-			<div class="card-body">
-			<div class="card-text">
-			<ul type="square">
-			<li>comment at top with your name, date and purpose of program
-			<li>class names are uppercase
-			<li>variable names are lowercase
-			<li>method names are lower case 
-			<li>program is indented correctly
-			</ul>
 			</div>
-			</div>
-			</div>
+			<div class="col-md-6">
+				<div class="card border-success">
+					<div class="card-header">Checklist for Java programs before uploading</div>
+					<div class="card-body">
+						<div class="card-text">
+							<ul type="square">
+								<li>comment at top with your name, date and purpose of program
+								<li>class names are uppercase
+								<li>variable names are lowercase
+								<li>method names are lower case
+								<li>program is indented correctly
+							</ul>
+						</div>
+					</div>
+				</div>
 
-		</div>
+			</div>
 		</div>
 		<div id="folderForm" class="d-none">
-			<form method='post' action='createFolder.php' onsubmit="return validateData2()">
+			<form method='post' action='createFolder.php' onsubmit="return validateFolder()">
 				<div class="row input-group ml-0">
-					<input type="text" name="folder" id="folder" class="col-4 form-control" placeholder="Enter folder name">
+					<input type="text" name="folder" id="folder" class="col-4 form-control"
+						placeholder="Enter folder name">
 					<input type="submit" class="btn btn-outline-success mr-2 shadow" value="Create folder">
 				</div>
 			</form>
 		</div>
-		<button id="folderBtn" class="btn btn-outline-secondary mr-2 shadow" onclick="displayForm()">Create folder</button>
+		<button id="folderBtn" class="btn btn-outline-secondary mr-2 shadow" onclick="displayForm()">Create
+			folder</button>
 	</div>
 	<script>
-	function displayForm() {
-		document.getElementById("folderBtn").outerHTML = '<div id="folderBtn" class="d-none"></div>';		
-		document.getElementById("folderForm").classList.remove('d-none');
-		document.getElementById("folderForm").classList.add('d-block');
-	}
+		function displayForm() {
+			document.getElementById("folderBtn").outerHTML = '<div id="folderBtn" class="d-none"></div>';
+			document.getElementById("folderForm").classList.remove('d-none');
+			document.getElementById("folderForm").classList.add('d-block');
+		}
 	</script>
 </body>
 
