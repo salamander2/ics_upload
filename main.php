@@ -130,7 +130,7 @@ foreach($scanned_directory as $file)
 				<button class="btn float-right btn-warning mr-2 shadow"
 					onclick="location.href='logout.php'">Logout</button></h3>
 
-			<form action="preUpload.php" method="post" enctype="multipart/form-data">
+			<form action="upload.php" method="post" enctype="multipart/form-data">
 				<div class="row mx-2">
 					<div class="col-md-4 overflow-hidden">
 						<input class="btn btn-primary shadow pb-1" type="file" name="fileToUpload" id="fileToUpload">
@@ -149,7 +149,7 @@ foreach($scanned_directory as $file)
 					</div>
 					<div class="col-md-4">
 						<input class="btn btn-success shadow pb-2" type="submit" value="Upload chosen file"
-							name="submit" onclick="return validateFileData()">
+							name="submit">    <!-- onclick="return validateFileData()"> -->
 					</div>
 				</div>
 			</form>
