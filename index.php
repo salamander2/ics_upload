@@ -67,7 +67,7 @@ if(isset($_POST['submit'])) {
 
 <head>
 	<meta charset="utf-8">
-	<title>File Uploader</title>
+	<title>File Uploader - login</title>
 	<link rel="stylesheet" href="./resources/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<!--    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>-->

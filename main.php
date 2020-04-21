@@ -39,7 +39,7 @@ foreach($scanned_directory as $file)
 
 <head>
 	<meta charset="utf-8">
-	<title>File Uploader <?= $username?></title>
+	<title>File Uploader : <?= $username?></title>
 	<link rel="stylesheet" href="./resources/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -124,7 +124,7 @@ foreach($scanned_directory as $file)
 		}
 	</script>
 	<a href="help.html"><button class="btn m-1 btn-outline-primary ">Help</button></a>
-	<div class="container my-2">
+	<div class="container-fluid my-2">
 		<div class="card Xtext-center bg-secondary my-2 py-2">
 			<h3 class="text-center text-white">Hello <?php echo $fullname?>
 				<button class="btn float-right btn-warning mr-2 shadow"
@@ -162,8 +162,8 @@ foreach($scanned_directory as $file)
 				<th>Folder</th>
 				<th>Date</th>
 				<th></th>
-				<th>Comments</th>
-				<th>Marked?</th>
+				<th style="width: 40%">Comments</th>
+				<th>Mark</th>
 			</tr>
 
 			<?php

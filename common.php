@@ -34,23 +34,23 @@ function connectToDB() {
     return $db;
 }
 
-function runSimpleQuery($mysqli, $sql_) {                                                                                                                                                                
-    $result = mysqli_query($mysqli, $sql_);                                                                                                                                                              
-//  if (!$mysqli->error) {                                                                                                                                                                               
-//      printf("Errormessage: %s\n", $mysqli->error);                                                                                                                                                    
-//  }                                                                                                                                                                                                    
-                                                                                                                                                                                                         
-    // Check result. This shows the actual query sent to MySQL, and the error. Useful for debugging.                                                                                                     
-    if (!$result) {                                                                                                                                                                                      
-       $message_  = 'Invalid query: ' . mysqli_error($mysqli) . "\n<br>";                                                                                                                                
-       $message_ .= 'SQL: ' . $sql_;                                                                                                                                                                     
-       die($message_);                                                                                                                                                                                   
-    }                                                                                                                                                                                                    
+function runSimpleQuery($mysqli, $sql_) {
+    $result = mysqli_query($mysqli, $sql_);
+//  if (!$mysqli->error) {
+//      printf("Errormessage: %s\n", $mysqli->error);
+//  }
+
+    // Check result. This shows the actual query sent to MySQL, and the error. Useful for debugging.
+    if (!$result) {
+       $message_  = 'Invalid query: ' . mysqli_error($mysqli) . "\n<br>";
+       $message_ .= 'SQL: ' . $sql_;
+       die($message_);
+    }
     return $result;
-}   
+}
 
 function clean_input($string) {
     $string = trim(strip_tags(addslashes($string)));
     return $string;
-}  
+}
 
