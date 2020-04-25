@@ -99,7 +99,7 @@ if ($fileExists) {
 	//echo 'ans = confirm("This file already exists, do you want to overwrite it?");';
 	//echo 'if (ans == false) window.location.href="main.php";';
 	//echo 'else window.location.href="doUpload.php";';
-	echo 'alert("Overwriting files is not working yet");';
+	echo 'alert("Overwriting files is not working yet. Delete the existing file and then do upload.");';
 	echo 'window.location.href="main.php";';
 	echo "</script>";
 	exit;

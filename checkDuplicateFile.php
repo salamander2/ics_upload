@@ -3,12 +3,16 @@ session_start();
 require_once('common.php');
 $db = connectToDB();
 
-$filename = clean_input($_POST['filename']);
+// $filename = clean_input($_POST['filename']);
+$filename = $_POST['filename'];
+$filename = str_replace("\\", "/", $filename);
+$filename = basename($filename);
+$filename = clean_input($filename);
 $foldername = clean_input($_POST['foldername']);
-//Find if the file already exists, if so, don't create a new entry, just erase comment and mark.
 
+//Find if the file already exists, if so, don't create a new entry, just erase comment and mark.
 //Need two versions of this depending if path is empty or not.
-if (empty($foldername)) {
+if (empty($foldername) || $foldername == "none") {
 	$sql = "SELECT id from fileinfo WHERE username = ? AND filename = ? AND (path IS NULL OR path = '')";
 	if ($stmt = $db->prepare($sql)) {
 		$stmt->bind_param("ss", $username, $filename);
@@ -47,5 +51,5 @@ if (0 === $num_rows) {
 	$fileExists = false;
 }
 
-//echo json_encode(array('status'=>$fileExists));
-echo json_encode($fileExists);
+echo json_encode(array('status'=>$fileExists, 'file'=>$filename, 'folder'=>$foldername));
+// echo json_encode($fileExists);

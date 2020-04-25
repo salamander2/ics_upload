@@ -68,7 +68,9 @@ foreach($scanned_directory as $file)
 			var filename, foldername;
 			filename = document.getElementById("fileToUpload").value;
 			foldername = document.getElementById("foldername").value;
-			ajaxResult = "none";
+			console.log("start");
+
+			event.preventDefault();
 			$.ajax({
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -77,40 +79,39 @@ foreach($scanned_directory as $file)
 				async: true,
 				url: 'checkDuplicateFile.php',
 				data: {
-					file: filename,
-					folder: foldername
+					filename: filename,
+					foldername: foldername
 				},
-				timeout:3000,
+				// timeout:3000,
 				dataType: "json",
-				// contentType: "application/json",     //this totally messes up data transfer
-				success: function (msg, status, jqXhr) {
-					//alert('status ' + status);
-					msg = JSON.parse(msg);
-					// msg = JSON.parse(msg.responseText);
-					alert("msg="+msg);
-					if (msg.status === 'true' || msg === 'true') {
-						ajaxResult = "true";
-						return false;
-						//window.location = "/lockers/homeroom/" + coursecode;
+				success: function (msg,status,xhr) {
+					console.log(JSON.stringify(xhr));
+					console.log("status:"+msg.status);
+					if (msg.status == true ) {
 						var x = confirm("This FILE already exists. Do you want to overwrite it?");
-					} else if (msg == "false") {
-						confirmAction();
-						ajaxResult = "false";
-						alert("NOT a duplicate file");
-						return false;
+						if (x) {
+							console.log("perform upload2")
+							return true;
+						} else {
+							return false;
+						}
+					} else if (msg.status == false) {
+						console.log("perform upload1")
+						return true;
 					} else {
 						ajaxResult = "error";
 						alert("A strange error has happened. check duplicate files. JSON." + msg);
-						return true;
+						return false;
 					}
 				},
-				error: function (err) {
-					alert('The ajax query did not run. Error: ' + err);
-					console.log(err);
+				error: function (xhr) {
+					//alert("An error occured: " + xhr.status + " " + xhr.statusText);
+					console.log(JSON.stringify(xhr));
+					// console.log("ERROR:" + xhr.status + " " + xhr.statusText);
 					return false;
 				}
 			});
-			alert("AJAX:"+ajaxResult);
+			return true;
 		}
 
 
@@ -130,7 +131,7 @@ foreach($scanned_directory as $file)
 				<button class="btn float-right btn-warning mr-2 shadow"
 					onclick="location.href='logout.php'">Logout</button></h3>
 
-			<form action="upload.php" method="post" enctype="multipart/form-data">
+			<form action="upload.php" method="post" enctype="multipart/form-data" >
 				<div class="row mx-2">
 					<div class="col-md-4 overflow-hidden">
 						<input class="btn btn-primary shadow pb-1" type="file" name="fileToUpload" id="fileToUpload">
@@ -149,7 +150,7 @@ foreach($scanned_directory as $file)
 					</div>
 					<div class="col-md-4">
 						<input class="btn btn-success shadow pb-2" type="submit" value="Upload chosen file"
-							name="submit">    <!-- onclick="return validateFileData()"> -->
+							name="submit" onclick="return validateFileData();"> 
 					</div>
 				</div>
 			</form>

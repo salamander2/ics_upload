@@ -27,8 +27,11 @@ $response = mysqli_fetch_all($result);
 </head>
 
 <body>
-
     <script>
+		function confirmAction() {
+			return confirm("Are you sure");
+		}
+
         function updateRow(num) {
 
             //Create a formdata object
