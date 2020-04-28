@@ -63,8 +63,10 @@ foreach($scanned_directory as $file)
 				document.getElementById("error_message").innerHTML = text;
 				return false;
 			}
+
 			/* Now check if it is a duplicate file */
 			//I can't make this a separate function as it ends too soon. ajax is not blocking output
+/*
 			var filename, foldername;
 			filename = document.getElementById("fileToUpload").value;
 			foldername = document.getElementById("foldername").value;
@@ -111,6 +113,8 @@ foreach($scanned_directory as $file)
 					return false;
 				}
 			});
+*/
+
 			return true;
 		}
 
