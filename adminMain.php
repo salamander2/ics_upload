@@ -135,7 +135,7 @@ foreach ($response as $item){
                 </tr>
 
                 <?php
-$sql = "SELECT id, username, path, filename, time, comment, mark from fileinfo order by username";
+$sql = "SELECT id, username, path, filename, time, comment, mark FROM fileinfo ORDER BY time DESC";
 $result = mysqli_query($db,$sql);
 $stmt->execute();
 while($row = $result->fetch_assoc()) {
