@@ -92,6 +92,7 @@ print_r($_FILES);
 echo "</pre>"; 
 */
 
+/********** DO WE OVERWRITE OR ABORT? *********************
 
 //Find a way to reload this program with the authorization to continue the upload of a duplicate file.
 if ($fileExists) {
@@ -105,7 +106,7 @@ if ($fileExists) {
 	exit;
 }
 
-
+************************************************************/
 
 $targetfile = $targetdir . basename($_FILES["fileToUpload"]["name"]);
 
