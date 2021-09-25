@@ -2,7 +2,7 @@
 
 #define('MYSQL_HOST','quarkphysics.netfirmsmysql.com');
 define('MYSQL_HOST','localhost');
-define('MYSQL_USER','shichicken');
+define('MYSQL_USER','shichicken2');
 define('MYSQL_PASS','Bramble83#');
 define('MYSQL_DB','ics_upload');
 

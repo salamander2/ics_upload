@@ -62,6 +62,7 @@ $response = mysqli_fetch_all($result);
                     //};
                     //alert(txt);
                     // alert(xmlhttp);
+					alert("Row " + num + " updated"); 
                     window.location.reload(true);
                 }
             }
