@@ -9,7 +9,7 @@ if ($username != ADMINUSER) {
 }
 
 //get all of the users
-$sql = "SELECT username,fullname from users";
+$sql = "SELECT username,fullname FROM users ORDER BY fullname";
 $result=runSimpleQuery($db,$sql);
 $response = mysqli_fetch_all($result);
 
@@ -23,7 +23,30 @@ $response = mysqli_fetch_all($result);
     <title>File Uploader: Admin</title>
     <link rel="stylesheet" href="./resources/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<script src="./resources/jquery.3.4.1.min.js"></script>
+	<script src="./resources/bootstrap.4.5.2.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script>
+	var showMarked = true;
+	function hideShowMarked() {
+		//document.getElementById("results_box").style = "display:inline-block;";
+		// alert("hello button 3");
+		showMarked = !showMarked;
+		if (showMarked) {
+			$('.marked').css('display','table-row');
+			$('#btnMarked').text('Hide marked work');
+		} else {
+			$('.marked').css('display','none');
+			$('#btnMarked').text('Show marked work');
+		}
+	}
+
+	</script>
+	<style>
+	.marked, .shaded {
+		background-color:#DDF;
+	}
+	</style>
 </head>
 
 <body>
@@ -75,7 +98,7 @@ $response = mysqli_fetch_all($result);
 
     <div class="container my-2 mx-auto">
         <div class="card bg-secondary pt-3 my-2 py-2">
-            <h3 class="text-center text-white">Hello <?php echo $fullname?> <button
+            <h3 class="text-center text-white">Hello <u><?php echo $fullname?></u> <button
                     class="btn float-right btn-warning mr-2 shadow" onclick="location.href='logout.php'">Logout</button>
             </h3>
             <div class="card mx-4 my-2 pt-2 bg-primary text-center text-white">
@@ -83,21 +106,28 @@ $response = mysqli_fetch_all($result);
             </div>
         </div>
 
-            <h2 class="text-center">Users</h2>
+            <h2 class="text-center">Users 
+ <button class="btn btn-success float-right" type="button" data-toggle="collapse" data-target="#usertable" aria-expanded="false" aria-controls="collapseExample">
+Show/Hide
+  </button>
+</h2>
+			<div id="usertable" class="collapse">
             <table class="table table-bordered">
                 <tr>
-                    <th>User name</th>
                     <th>Full name</th>
+                    <th>User name</th>
                     <th>TotalFiles</th>
                     <th>Delete</th>
                 </tr>
-                <?php
+<?php
 
 foreach ($response as $item){
     $user = $item[0];
     $fullname = $item[1];
     
+	//skip ADMINUSER's files
     if ($user == ADMINUSER) continue;
+
     $sql = "SELECT COUNT(filename) FROM fileinfo WHERE username = ?";
     if ($stmt = $db->prepare($sql)) {
         $stmt->bind_param("s", $user);
@@ -112,8 +142,8 @@ foreach ($response as $item){
     }
     
     echo "<tr>";
-    echo "<td>$user</td>";
     echo "<td>$fullname</td>";
+    echo "<td>$user</td>";
     echo "<td>$count</td>";
     //TODO add in a confirm!
     echo "<td><form method='post' action='adminDeleteUser.php'><input name='user' value='$user' style='outline: none;' hidden><button>Delete</button></form></td>";
@@ -121,10 +151,14 @@ foreach ($response as $item){
 }
 ?>
             </table>
+	</div> <!-- end collapse -->
+<hr>
 </div>
 <div class="container-fluid">
             <div id="error_message"></div>
-            <h2 class="text-center">Uploaded Files</h2>
+            <h2 class="text-center">Uploaded Files
+
+<button id="btnMarked" class="btn btn-outline-warning float-right" type="button" onclick="hideShowMarked()">Hide marked work</button></h2>
             <table class="table table-bordered">
                 <tr>
                     <th>Username</th>
@@ -136,27 +170,33 @@ foreach ($response as $item){
                 </tr>
 
                 <?php
-$sql = "SELECT id, username, path, filename, time, comment, mark FROM fileinfo ORDER BY time DESC";
+//$sql = "SELECT id, username, path, filename, time, comment, mark FROM fileinfo ORDER BY time DESC";
+$sql = "SELECT id, users.fullname, path, filename, time, comment, mark FROM fileinfo INNER JOIN users ON fileinfo.username = users.username ORDER BY time DESC;";
 $result = mysqli_query($db,$sql);
 $stmt->execute();
 while($row = $result->fetch_assoc()) {
     $id = $row['id'];
-    $user = $row['username'];
+    //$user = $row['username'];
+    $user = $row['fullname'];
     $path = $row['path'];
     $filename = $row['filename'];
     $time = $row['time'];
     $comment = $row['comment'];
     $mark = $row['mark'];
     
-    echo "<tr>";
+	if ($mark != "") {
+		echo "<tr class=\"marked\">";
+	} else {
+		echo "<tr>";
+	}
     echo "<td>$user</td>";
     echo "<td>$path/$filename</td>";
     echo "<td>$time</td>".PHP_EOL;
     echo "<td>";
     echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp; ".PHP_EOL;
     echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden><button class='btn btn-danger shadow'>Delete</button></form></td>".PHP_EOL;
-    echo '<td style="color:black;"><textarea id="comment'.$id.'" rows="1">'.$comment.'</textarea></td>'.PHP_EOL;
-    echo '<td style="color:black;"><input id="mark'.$id.'" type="text" size="4" value="'.$mark.'"></td>'.PHP_EOL;
+    echo '<td style="color:black;"><textarea class="shaded" id="comment'.$id.'" rows="1">'.$comment.'</textarea></td>'.PHP_EOL;
+    echo '<td style="color:black;"><input class="shaded" id="mark'.$id.'" type="text" size="4" value="'.$mark.'"></td>'.PHP_EOL;
     echo "<td><button type=\"submit\" onclick=\"updateRow(".$id.")\">Update</button></td>".PHP_EOL;
     echo "</tr>".PHP_EOL;
 }
