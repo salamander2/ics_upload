@@ -179,7 +179,7 @@ foreach($scanned_directory as $file)
 				$filename = $item[1];
 				$path = $item[2];
 				$time = $item[3];
-				$comment = $item[4];
+				$comment = stripslashes($item[4]);
 				$mark = $item[5];
 				echo "<tr>";
 				echo "<td>$filename</td>";
@@ -242,6 +242,7 @@ foreach($scanned_directory as $file)
 		</div>
 		<button id="folderBtn" class="btn btn-outline-secondary mr-2 shadow" onclick="displayForm()">Create
 			folder</button>
+		<p class="text-success">Only create a folder if you have a project with many files</p>
 	</div>
 	<script>
 		function displayForm() {

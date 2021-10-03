@@ -181,7 +181,7 @@ while($row = $result->fetch_assoc()) {
     $path = $row['path'];
     $filename = $row['filename'];
     $time = $row['time'];
-    $comment = $row['comment'];
+    $comment = stripslashes($row['comment']);
     $mark = $row['mark'];
     
 	if ($mark != "") {
