@@ -168,7 +168,9 @@ foreach ($response as $item){
 ?>
             </table>
 	</div> <!-- end collapse -->
+
 <!-- End Show All Users -->
+
 <hr>
 </div>
 
@@ -190,6 +192,7 @@ foreach ($response as $item){
                 </tr>
 
                 <?php
+$numNotMarked=0;
 //$sql = "SELECT id, username, path, filename, time, comment, mark FROM fileinfo ORDER BY time DESC";
 $sql = "SELECT id, users.fullname, path, filename, time, comment, mark FROM fileinfo INNER JOIN users ON fileinfo.username = users.username ORDER BY time DESC;";
 $result = mysqli_query($db,$sql);
@@ -209,6 +212,7 @@ while($row = $result->fetch_assoc()) {
 		echo "<tr class=\"marked\">";
 	} else {
 		echo "<tr>";
+		$numNotMarked++;
 	}
     echo "<td>$stFullname</td>";
     echo "<td>$path/$filename</td>";
@@ -223,7 +227,7 @@ while($row = $result->fetch_assoc()) {
 }
 ?>
             </table>
-
+<div class="alert alert-success">Number not marked =  <?=$numNotMarked?> </div>
     </div> <!-- end container -->
 </body>
 
