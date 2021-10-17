@@ -5,6 +5,13 @@ $db = connectToDB();
 
 $id = $_POST["id"];
 
+//make sure that this is the admin user!
+if ($username != ADMINUSER) {
+    header("Location: main.php");
+}
+
+//TODO: make into prepared statement
+
 //Don't get username from Session variable since this can also be called from adminMain and then the username is the admin.
 $sql = "SELECT filename, path, username FROM fileinfo WHERE id = $id";
 $result = runSimpleQuery($db,$sql);

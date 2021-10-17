@@ -5,6 +5,9 @@ username and fullname refer to the logged in user (admin)
 
 student and stFullname refer to the student
 
+NOTE: everything here (should) use prepared statements.
+      The "Update" button uses AJAX, so it will not time out like everything else. 
+	  If this screen is open for hours, you'll still be able to update data!
 */
 session_start();
 require_once('common.php');

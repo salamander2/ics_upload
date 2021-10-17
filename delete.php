@@ -3,6 +3,11 @@
 	require_once('common.php');
 	$db = connectToDB();
 
+	//make sure that this is the admin user!
+	if ($username != ADMINUSER) {
+		header("Location: main.php");
+	}
+
 	$id = $_POST["id"];
 	$sql = "SELECT filename, path FROM fileinfo WHERE id = $id";
 	$result = runSimpleQuery($db,$sql);
