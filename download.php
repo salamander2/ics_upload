@@ -5,10 +5,11 @@ $db = connectToDB();
 
 $id = $_POST["id"];
 
-//make sure that this is the admin user!
-if ($username != ADMINUSER) {
-    header("Location: main.php");
-}
+	//make sure that this is the admin user!
+	//NO! Users need to download and delete as well
+	//if ($username != ADMINUSER) {
+	//		header("Location: main.php");
+	//}
 
 //TODO: make into prepared statement
 
