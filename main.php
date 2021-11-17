@@ -43,6 +43,11 @@ foreach($scanned_directory as $file)
 	<link rel="stylesheet" href="./resources/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+	.marked, .shaded {
+		background-color:#DDF;
+	}
+	</style>
 </head>
 
 <body>
@@ -181,7 +186,11 @@ foreach($scanned_directory as $file)
 				$time = $item[3];
 				$comment = stripslashes($item[4]);
 				$mark = $item[5];
-				echo "<tr>";
+	if ($mark != "") {
+		echo "<tr class=\"marked\">";
+	} else {
+		echo "<tr>";
+	}
 				echo "<td>$filename</td>";
 				echo "<td>$path</td>";
 				echo "<td>$time</td>";
