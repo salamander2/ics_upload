@@ -42,7 +42,23 @@ foreach($scanned_directory as $file)
 	<title>File Uploader : <?= $username?></title>
 	<link rel="stylesheet" href="./resources/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script>
+	var showMarked = true;
+	function hideShowMarked() {
+		//document.getElementById("results_box").style = "display:inline-block;";
+		// alert("hello button 3");
+		showMarked = !showMarked;
+		if (showMarked) {
+			$('.marked').css('display','table-row');
+			$('#btnMarked').text('Hide marked work');
+		} else {
+			$('.marked').css('display','none');
+			$('#btnMarked').text('Show marked work');
+		}
+	}
+
+	</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
 	.marked, .shaded {
 		background-color:#DDF;
@@ -188,7 +204,10 @@ foreach($scanned_directory as $file)
 			</form>
 		</div>
 		<div id="error_message"></div>
-		<div class="text-secondary">Uploaded files</div>
+		<div class="text-secondary">Uploaded files
+<button id="btnMarked" class="btn btn-outline-warning mb-1 float-right" type="button" onclick="hideShowMarked()">Hide marked work</button></h2>
+
+</div>
 		<table class="table table-bordered">
 			<tr>
 				<th>FileName</th>
