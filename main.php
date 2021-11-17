@@ -47,6 +47,29 @@ foreach($scanned_directory as $file)
 	.marked, .shaded {
 		background-color:#DDF;
 	}
+	.smallbtn {}
+    th.commentW {
+		width:40%;
+    }
+	@media (max-width: 1100px){
+		/* from Bootstrap 4 .btn-sm */
+		.smallbtn {
+			padding: .25rem .3rem;
+			font-size: .8rem;
+			line-height: 1.4;
+			border-radius: .2rem;
+		}
+		.sml {
+			margin-left:-10px;
+		}
+		.smr {
+			padding-right:2px;
+		}
+		th.commentW {
+			width:36%;
+		}
+	}
+
 	</style>
 </head>
 
@@ -172,7 +195,7 @@ foreach($scanned_directory as $file)
 				<th>Folder</th>
 				<th>Date</th>
 				<th></th>
-				<th style="width: 40%">Comments</th>
+				<th class="commentW">Comments</th>
 				<th>Mark</th>
 			</tr>
 
@@ -195,8 +218,12 @@ foreach($scanned_directory as $file)
 				echo "<td>$path</td>";
 				echo "<td>$time</td>";
 				echo "<td>";
-				echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp; ";
-				echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden><button class='btn btn-danger shadow'>Delete</button></form></td>";
+				echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden>";
+				echo "<button class='btn btn-info shadow smallbtn sml'>Download</button>";
+				echo "</form> &nbsp; ";
+				echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden>";
+				echo "<button class='btn btn-danger shadow smallbtn smr'>Delete</button>";
+				echo "</form></td>";
 				echo "<td>$comment</td>";
 				echo "<td>$mark</td>";
 				echo "</tr>";
