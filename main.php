@@ -7,7 +7,7 @@ if (!isset($username) || empty($username)) header("Location: logout.php");
 
 $db = connectToDB();
 $error_message = "";
-$sql = "SELECT id,filename,path,time,comment,mark FROM fileinfo WHERE username = ?";
+$sql = "SELECT id,filename,path,time,comment,mark FROM fileinfo WHERE username = ? ORDER by time DESC";
 if ($stmt = $db->prepare($sql)) {
 	$stmt->bind_param("s", $username);
 	$stmt->execute();
