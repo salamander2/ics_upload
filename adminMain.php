@@ -220,7 +220,7 @@ while($row = $result->fetch_assoc()) {
 		$numNotMarked++;
 	}
     echo "<td>$stFullname</td>";
-    echo "<td>$path/$filename</td>";
+    echo "<td style=\"max-width:350px;\">$path/ $filename</td>";
     echo "<td>$time</td>".PHP_EOL;
     echo "<td>";
     echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp; ".PHP_EOL;
