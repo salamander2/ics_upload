@@ -7,6 +7,23 @@ if (!isset($username) || empty($username)) header("Location: logout.php");
 
 $db = connectToDB();
 $error_message = "";
+
+//Find total number of programs in database
+$sql = "SELECT COUNT(*) AS total FROM fileinfo";
+$result = mysqli_query($db,$sql);
+if (!$result) {
+   die("Query to count programs in 'fileinfo' failed");
+}
+$totalNum = $result->fetch_row()[0];
+
+//Find number of unmarked programs in database
+$sql = "SELECT COUNT(*) AS total FROM fileinfo WHERE mark IS NULL";
+$result = mysqli_query($db,$sql);
+if (!$result) {
+   die("Query to count unmarked programs in 'fileinfo' failed");
+}
+$totalUnmarked = $result->fetch_row()[0];
+
 $sql = "SELECT id,filename,path,time,comment,mark FROM fileinfo WHERE username = ? ORDER by time DESC";
 if ($stmt = $db->prepare($sql)) {
 	$stmt->bind_param("s", $username);
@@ -172,7 +189,14 @@ foreach($scanned_directory as $file)
 			return true;
 		}
 	</script>
-	<a href="help.html"><button class="btn m-1 btn-outline-primary ">Help</button></a>
+<div class="">
+	<a href="help.html">
+<button class="btn m-1 btn-outline-primary ">Help</button></a>
+<span class="float-right mt-2 mr-5 text-secondary">
+♦ Number not marked =  <?=$totalUnmarked?> ♦
+Total # of programs = <?=$totalNum?> ♦
+
+</span></div>
 	<div class="container-fluid my-2">
 		<div class="card Xtext-center bg-secondary my-2 py-2">
 			<h3 class="text-center text-white">Hello <?php echo $fullname?>
