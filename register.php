@@ -19,10 +19,13 @@ if(isset($_POST['submit'])) {
 	$username = clean_input($_POST['username']);
 	$fullname = clean_input($_POST['fullname']);
 	$password = $_POST["password"];
+	$authcode = $_POST["authcode"];
 
 	if(strlen($username) < 5) $error_message = "Username must be at least 5 characters";
 	if(strlen($password) < 6) $error_message = "Password must be at least 6 characters";
+	if(strlen($authcode) != 5) $error_message = "Authorization code must be 5 digits";
 
+	if($authcode != AUTHCODE) $error_message = "Incorrect authorization code";
 	$pwdhash = password_hash($password, PASSWORD_DEFAULT);
 	$password = "---";
 	//create and perfrom SQL
@@ -160,6 +163,11 @@ if(isset($_POST['submit'])) {
 						</div>
 					</div>
 					<div class="row">
+						<div class="col-8 text-left">
+							<label for="authcode" class="" data-toggle="tooltip" data-placement="top" title="get it from your teacher">Enter authorization code</label>
+							<input type="text" class="" id="authcode" name = "authcode" size="5" placeholder="00000"><br>
+							<i class="text-secondary">Get it from your teacher</i>
+						</div>
 						<div class="col-4">
 							<button type="submit" name="submit" class="btn btn-primary btn-block">Register</button>
 						</div>

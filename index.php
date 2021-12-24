@@ -72,7 +72,7 @@ if(isset($_POST['submit'])) {
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<!--    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>-->
 	<!--    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-	<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -142,11 +142,12 @@ if(isset($_POST['submit'])) {
 						</div>
 						<!-- /.col -->
 						<div class="col-4">
-							<a href="register.php" class="text-center">Register a new user</a>
+							<a href="register.php" class="btn btn-outline-primary btn-block">Register a new user</a>
 						</div>
 						<!-- /.col -->
 						<div class="col-4">
-							<a href="help.html">I forgot my password</a>
+							<!-- <a href="help.html">I forgot my password</a> -->
+							<a href="help.html" class="btn btn-outline-primary btn-block">I forgot my password</a>
 						</div>
 						<!-- /.col -->
 					</div>
