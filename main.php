@@ -267,7 +267,8 @@ Total # of programs = <?=$totalNum?> ♦
 				echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden>";
 				echo "<button class='btn btn-danger shadow smallbtn smr'>Delete</button>";
 				echo "</form></td>";
-				echo "<td>$comment</td>";
+	#			echo "<td>$comment</td>";
+			    echo '<td><textarea readonly rows="2" style="width:100%">'.$comment.'</textarea></td>';
 				echo "<td>$mark</td>";
 				echo "</tr>";
 			}

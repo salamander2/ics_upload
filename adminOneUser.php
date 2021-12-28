@@ -139,7 +139,9 @@ if ($stmt = $db->prepare($sql)) {
                     <th>Filename with path</th>
                     <th>Date</th>
                     <th></th>
-                    <th>Comments</th>
+                    <!-- <th>Comments</th> 
+					THis does not make the column wide enough ...-->
+					<th style="overflow:hidden;">Comments . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</th>
                     <th>Mark</th>
                     <th>&nbsp;<th>
                 </tr>
@@ -168,7 +170,7 @@ while($row = $result->fetch_assoc()) {
     echo "<td>";
     echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp; ".PHP_EOL;
     echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden><button class='btn btn-danger shadow'>Delete</button></form></td>".PHP_EOL;
-    echo '<td style="color:black;"><textarea class="shaded" id="comment'.$id.'" rows="1" cols="30">'.$comment.'</textarea></td>'.PHP_EOL;
+    echo '<td style="color:black;"><textarea class="shaded" id="comment'.$id.'" rows="1" style="width:100%">'.$comment.'</textarea></td>'.PHP_EOL;
     echo '<td style="color:black;"><input class="shaded" id="mark'.$id.'" type="text" size="4" value="'.$mark.'"></td>'.PHP_EOL;
     echo "<td><button type=\"submit\" onclick=\"updateRow(".$id.")\">Update</button></td>".PHP_EOL;
     echo "</tr>".PHP_EOL;
