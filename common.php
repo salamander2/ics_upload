@@ -49,6 +49,12 @@ function runSimpleQuery($mysqli, $sql_) {
     return $result;
 }
 
+function clean_html($string) {
+    $string = trim(htmlspecialchars(addslashes($string)));
+    #$string = trim(htmlentities(addslashes($string)));
+    return $string;
+}
+
 function clean_input($string) {
     $string = trim(strip_tags(addslashes($string)));
     return $string;

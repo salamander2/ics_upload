@@ -10,6 +10,7 @@ if ($username != ADMINUSER) {
 }
 
 ## This will go to xmlhttp.responsetext
+## so we can't use "die" or "echo" here.
 //die("HERE in updateUser!");
 
 $error_message="";
@@ -18,7 +19,8 @@ $frmID = $frmMark = $frmComment = "";
 
 $frmID = clean_input($_POST['fileid']);
 $frmMark = clean_input($_POST['mark']);
-$frmComment = clean_input($_POST['comment']);
+#$frmComment = clean_input($_POST['comment']);
+$frmComment = clean_html($_POST['comment']);
 
 $sql = "UPDATE fileinfo SET mark=?, comment=? WHERE id=?";
 if ($stmt = $db->prepare($sql)) {
@@ -30,3 +32,4 @@ if ($stmt = $db->prepare($sql)) {
     $message_ .= 'SQL: ' . $sql;
     die($message_);
 }
+

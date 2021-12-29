@@ -76,6 +76,7 @@ $response = mysqli_fetch_all($result);
             formData.append("mark", val);
             var name = "comment" + num;
             var val = document.getElementById(name).value;
+			//alert (val);
             formData.append("comment", val);
 
             //Warning: You have to use encodeURIComponent() for all names and especially for the values so that possible & contained in the strings do not break the format.
