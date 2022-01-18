@@ -105,10 +105,6 @@ $response = mysqli_fetch_all($result);
             xmlhttp.send(formData);
         }
 	
-		function gotoUser(student) {
-			console.log(student);
-			location.href="adminOneUser.php?ID="+student;
-		}
     </script>
 
 
@@ -122,58 +118,12 @@ $response = mysqli_fetch_all($result);
             </div>
         </div>
 
-            <h2 class="text-center" data-toggle="collapse" data-target="#usertable" aria-expanded="false" aria-controls="collapseExample">Users 
- <button class="btn btn-success float-right" type="button" data-toggle="collapse" data-target="#usertable" aria-expanded="false" aria-controls="collapseExample">
-Show/Hide
-  </button>
-</h2>
-
-<!-- Show All Users -->
-
-			<div id="usertable" class="collapse">
-            <table class="table table-bordered">
-                <tr>
-                    <th>Full name</th>
-                    <th>User name</th>
-                    <th>TotalFiles</th>
-                    <th>Delete</th>
-                </tr>
 <?php
-
-foreach ($response as $item){
-    $student = $item[0];
-    $stFullname = $item[1];
-    
-	//skip ADMINUSER's files
-    if ($student == ADMINUSER) continue;
-
-    $sql = "SELECT COUNT(filename) FROM fileinfo WHERE username = ?";
-    if ($stmt = $db->prepare($sql)) {
-        $stmt->bind_param("s", $student);
-        $stmt->bind_result($count);
-        $stmt->execute();
-        $stmt->fetch();
-        $stmt->close();
-    } else {
-        $message_  = 'Invalid query: ' . mysqli_error($db) . "\n<br>";
-        $message_ .= 'SQL: ' . $sql;
-        die($message_);
-    }
-    
-    echo "<tr>";
-    //echo "<td onclick=\"gotoUser(\"$user\")\" >$fullname &bull;</TD>";
-    echo "<td onclick=\"gotoUser('".$student."')\" >$stFullname &bull;</td>";
-    echo "<td>$student</td>";
-    echo "<td>$count</td>";
-    echo "<td><form method='post' onsubmit=\"return confirmAction()\" action='adminDeleteUser.php'><input name='user' value='$student' style='outline: none;' hidden><button>Delete</button></form></td>";
-    echo "</tr>".PHP_EOL;
-}
+    $sql = "SELECT COUNT(username) FROM users";
+	$result=runSimpleQuery($db,$sql);
+	$numUsers = $result->fetch_row()[0];
 ?>
-            </table>
-	</div> <!-- end collapse -->
-
-<!-- End Show All Users -->
-
+		<h5 class="text-center"><a href="adminUserList.php"><button type="button" class="alert alert-success border-success"><?=$numUsers?> Users </button></a></h5>
 <hr>
 </div>
 
@@ -200,7 +150,9 @@ $numMarked=0;
 //$sql = "SELECT id, username, path, filename, time, comment, mark FROM fileinfo ORDER BY time DESC";
 $sql = "SELECT id, users.fullname, path, filename, time, comment, mark FROM fileinfo INNER JOIN users ON fileinfo.username = users.username ORDER BY time DESC;";
 $result = mysqli_query($db,$sql);
-$stmt->execute();
+
+//$stmt->execute();
+
 while($row = $result->fetch_assoc()) {
     $id = $row['id'];
 	//overwriting these next two variables. Is this a problem?
