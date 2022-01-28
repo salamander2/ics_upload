@@ -22,7 +22,7 @@ if(isset($_POST['submit'])) {
 	$password = $_POST["password"];
 
 	//check password for that user
-	$sql = "SELECT password, fullname FROM users WHERE username = ?";
+	$sql = "SELECT password, fullname FROM users WHERE username = BINARY ?";
 	if ($stmt = $db->prepare($sql)) {
 		$stmt->bind_param("s", $username);
 		$stmt->execute();
@@ -41,7 +41,7 @@ if(isset($_POST['submit'])) {
 	$row_cnt = mysqli_num_rows($result);
 	// die($row_cnt);
 	if (0 === $row_cnt) {		
-		$error_message = "That user does not exist. Please register.";
+		$error_message = "That user does not exist. Please register.<br>(Also check case of username).";
 	} elseif (!password_verify ($password, $pwdHash )) {
 		$error_message = "Invalid password";
 	}

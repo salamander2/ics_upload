@@ -6,8 +6,15 @@ error_reporting(E_ALL);
 
 require_once 'config.php';
 
-$username = $_SESSION["username"];
-$fullname = $_SESSION["fullname"];
+$username=$fullname="??";
+
+if (isset($_SESSION['username'])) {
+	$username = $_SESSION["username"];
+}
+
+if (isset($_SESSION['fullname'])) {
+	$fullname = $_SESSION["fullname"];
+}
 
 //header("Content-Type: text/html; charset=utf-8");
 
