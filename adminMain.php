@@ -148,7 +148,7 @@ $response = mysqli_fetch_all($result);
 $numNotMarked=0;
 $numMarked=0;
 //$sql = "SELECT id, username, path, filename, time, comment, mark FROM fileinfo ORDER BY time DESC";
-$sql = "SELECT id, users.fullname, path, filename, time, comment, mark FROM fileinfo INNER JOIN users ON fileinfo.username = users.username ORDER BY time DESC;";
+$sql = "SELECT id, users.fullname, users.username, path, filename, time, comment, mark FROM fileinfo INNER JOIN users ON fileinfo.username = users.username ORDER BY time DESC;";
 $result = mysqli_query($db,$sql);
 
 //$stmt->execute();
@@ -156,7 +156,7 @@ $result = mysqli_query($db,$sql);
 while($row = $result->fetch_assoc()) {
     $id = $row['id'];
 	//overwriting these next two variables. Is this a problem?
-    //$student = $row['username'];
+    $studentTemp = $row['username'];
     $stFullname = $row['fullname'];
     $path = $row['path'];
     $filename = $row['filename'];
@@ -176,7 +176,7 @@ while($row = $result->fetch_assoc()) {
     echo "<td>$time</td>".PHP_EOL;
     echo "<td>";
     echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp; ".PHP_EOL;
-    echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden><button class='btn btn-danger shadow'>Delete</button></form></td>".PHP_EOL;
+    echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden> <input name='student' value='$studentTemp' style='outline: none;' hidden> <button class='btn btn-danger shadow'>Delete</button></form></td>".PHP_EOL;
     echo '<td style="color:black;"><textarea class="shaded" id="comment'.$id.'" rows="1" style="width:100%;">'.$comment.'</textarea></td>'.PHP_EOL;
     echo '<td style="color:black;"><input class="shaded" id="mark'.$id.'" type="text" size="4" value="'.$mark.'"></td>'.PHP_EOL;
     echo "<td><button type=\"submit\" onclick=\"updateRow(".$id.")\">Update</button></td>".PHP_EOL;
