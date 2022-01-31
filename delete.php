@@ -9,6 +9,11 @@
 	//	header("Location: main.php");
 	//}
 
+	$student = $username;
+	if ($username == ADMINUSER) {
+		$student = $_POST["student"];		
+	}
+
 	$id = $_POST["id"];
 	$sql = "SELECT filename, path FROM fileinfo WHERE id = $id";
 	$result = runSimpleQuery($db,$sql);
@@ -17,9 +22,9 @@
 	$path=$response[1];
 
 	if (empty($path))
-		$url="files/$username/$filename";
+		$url="files/$student/$filename";
 	else 
-		$url="files/$username/$path/$filename";
+		$url="files/$student/$path/$filename";
 
 	unlink($url);
 

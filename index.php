@@ -2,6 +2,7 @@
 session_start();
 require_once('common.php');
 
+//TODO: shouldn't username be set to "" no matter what?
 if (isset($username)){
 	$username = "";
 	$_SESSION["username"] = "";
