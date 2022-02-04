@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 require_once 'config.php';
 
-#$username=$fullname="";
+$username=$fullname="";
 
 if (isset($_SESSION["username"])) {
 	$username = $_SESSION["username"];

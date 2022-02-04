@@ -119,7 +119,7 @@ if ($stmt = $db->prepare($sql)) {
     <div class="container my-2 mx-auto">
         <div class="card bg-secondary pt-3 my-2 py-2">
             <h3 class="text-center text-white">
-			<button class="btn float-left btn-success ml-2 shadow" onclick="location.href='adminMain.php'">Back to Main</button>
+			<button class="btn float-left btn-success ml-2 shadow" onclick="location.href='adminUserList.php'">Back</button>
 			Hello <u><?php echo $fullname?></u> 
 			<button class="btn float-right btn-warning mr-2 shadow" onclick="location.href='logout.php'">Logout</button>
             </h3>
@@ -150,7 +150,9 @@ if ($stmt = $db->prepare($sql)) {
 //$sql = "SELECT id, username, path, filename, time, comment, mark FROM fileinfo ORDER BY time DESC";
 $sql = "SELECT id, path, filename, time, comment, mark FROM fileinfo WHERE username='$student' ORDER BY time DESC;";
 $result = mysqli_query($db,$sql);
-$stmt->execute();
+//TODO Fix the next line! Why is it here?
+#$stmt->execute();
+
 while($row = $result->fetch_assoc()) {
     $id = $row['id'];
     //$user = $row['username'];
