@@ -40,8 +40,8 @@ $response = mysqli_fetch_all($result);
 
 <body>
     <script>
-		function confirmAction() {
-			return confirm("Are you sure");
+		function confirmAction(student) {
+			return confirm("Delete "+student+". Are you sure");
 		}
 	
 		function gotoUser(student) {
@@ -99,7 +99,7 @@ foreach ($response as $item){
     echo "<th onclick=\"gotoUser('".$student."')\" class=\"text-primary\">&bull; $stFullname &bull;</th>";
     echo "<td>$student</td>";
     echo "<td>$count</td>";
-    echo "<td><form method='post' onsubmit=\"return confirmAction()\" action='adminDeleteUser.php'><input name='user' value='$student' style='outline: none;' hidden><button>Delete</button></form></td>";
+    echo "<td><form method='post' onsubmit=\"return confirmAction('$student')\" action='adminDeleteUser.php'><input name='user' value='$student' style='outline: none;' hidden><button>Delete</button></form></td>";
     echo "</tr>".PHP_EOL;
 }
 ?>

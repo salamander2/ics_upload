@@ -186,6 +186,8 @@ while($row = $result->fetch_assoc()) {
             </table>
 <div class="alert alert-success">Number not marked =  <?=$numNotMarked?> <span class="float-right"> Marked = <?=$numMarked?></div>
     </div> <!-- end container -->
+<script>
+		hideShowMarked(); //To start with marked work hidden
+</script>
 </body>
-
 </html>
