@@ -54,6 +54,18 @@ if(isset($_POST['submit'])) {
 		$_SESSION["username"] = $username;
 		$_SESSION["fullname"] = $fullname;
 
+		//Update last login timestamp
+		$sql = "UPDATE users set lastLogin=NOW() WHERE username = BINARY ?";
+		if ($stmt = $db->prepare($sql)) {
+			$stmt->bind_param("s", $username);
+			$stmt->execute();
+			$stmt->close();
+		} else {
+			$message_  = 'Invalid query: ' . mysqli_error($db) . "\n<br>";
+			$message_ .= 'SQL: ' . $sql;
+			die($message_);
+		}
+
 		if ($username == ADMINUSER) {
 			header('Location:adminMain.php');
 		} else {
