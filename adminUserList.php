@@ -19,7 +19,8 @@ if ($username != ADMINUSER) {
 }
 
 //get all of the users (students)
-$sql = "SELECT username,fullname FROM users ORDER BY fullname";
+$sql = "SELECT username,fullname,lastLogin FROM users ORDER BY fullname";
+$sql = "SELECT username,fullname,DATE_FORMAT(lastLogin,'%a, %b %e %Y') FROM users ORDER BY fullname";
 $result=runSimpleQuery($db,$sql);
 $response = mysqli_fetch_all($result);
 
@@ -69,6 +70,7 @@ $response = mysqli_fetch_all($result);
 			<tr>
 				<th>Full name</th>
 				<th>User name</th>
+				<th>Last Login</th>
 				<th>TotalFiles</th>
 				<th>Delete</th>
 			</tr>
@@ -77,6 +79,7 @@ $response = mysqli_fetch_all($result);
 foreach ($response as $item){
     $student = $item[0];
     $stFullname = $item[1];
+    $lastLogin = $item[2];
     
 	//skip ADMINUSER's files
     if ($student == ADMINUSER) continue;
@@ -98,6 +101,7 @@ foreach ($response as $item){
     //echo "<td onclick=\"gotoUser(\"$user\")\" >$fullname &bull;</TD>";
     echo "<th onclick=\"gotoUser('".$student."')\" class=\"text-primary\">&bull; $stFullname &bull;</th>";
     echo "<td>$student</td>";
+    echo "<td>$lastLogin</td>";
     echo "<td>$count</td>";
     echo "<td><form method='post' onsubmit=\"return confirmAction('$student')\" action='adminDeleteUser.php'><input name='user' value='$student' style='outline: none;' hidden><button>Delete</button></form></td>";
     echo "</tr>".PHP_EOL;
