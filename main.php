@@ -252,30 +252,53 @@ Total # of programs = <?=$totalNum?> ♦
 				$time = $item[3];
 				$comment = stripslashes($item[4]);
 				$mark = $item[5];
-	if ($mark != "") {
-		echo "<tr class=\"marked\">";
-	} else {
-		echo "<tr>";
-	}
-				echo "<td>$filename</td>";
-				echo "<td>$path</td>";
-				echo "<td>$time</td>";
-				echo "<td>";
-				echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden>";
-				echo "<button class='btn btn-info shadow smallbtn sml'>Download</button>";
-				echo "</form> &nbsp; ";
-				echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden>";
-				echo "<button class='btn btn-danger shadow smallbtn smr'>Delete</button>";
-				echo "</form></td>";
-	#			echo "<td>$comment</td>";
-			    echo '<td><textarea readonly rows="2" style="width:100%">'.$comment.'</textarea></td>';
-				echo "<td>$mark</td>";
-				echo "</tr>";
+				#marked:
+				if ($mark != "") {
+					echo "<tr class=\"marked\">";
+					echo "<td>$filename</td>";
+					echo "<td>$path</td>";
+					echo "<td>$time</td>";
+					echo "<td>";
+					echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden>";
+					echo "<button class='btn btn-info shadow smallbtn sml'>Download</button>";
+					echo "</form> &nbsp; ";
+					echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden>";
+					echo "<button class='btn btn-danger shadow smallbtn smr'>Delete</button>";
+					echo "</form></td>";
+					#echo '<td><textarea readonly rows="2" style="width:100%">'.$comment.'</textarea></td>';
+					echo "<td>&nbsp;</td>";
+					echo "<td>$mark</td>";
+					echo "</tr>";
+					echo "<tr class=\"marked\">";
+					echo "<td>&nbsp;</td>";
+					echo '<td colspan=4><textarea readonly rows="2" style="width:100%;background-color:#C7C7F4;">'.$comment.'</textarea></td>';
+					echo "<td>&nbsp;</td>";
+					echo "</tr>";
+				
+				}
+				#notmarked
+				 else {
+					echo "<tr>";
+					echo "<td>$filename</td>";
+					echo "<td>$path</td>";
+					echo "<td>$time</td>";
+					echo "<td>";
+					echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden>";
+					echo "<button class='btn btn-info shadow smallbtn sml'>Download</button>";
+					echo "</form> &nbsp; ";
+					echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden>";
+					echo "<button class='btn btn-danger shadow smallbtn smr'>Delete</button>";
+					echo "</form></td>";
+					echo '<td><textarea readonly rows="1" style="width:100%">'.$comment.'</textarea></td>';
+					echo "<td>$mark</td>";
+					echo "</tr>";
+				}
 			}
 
 			?>
 		</table>
 
+		<div class="divider py-1 mb-3 bg-info rounded"></div>
 		<div class="row">
 			<div class="col-md-6">
 				<div class="text-secondary">Folders</div>
@@ -293,6 +316,8 @@ Total # of programs = <?=$totalNum?> ♦
 				</table>
 
 			</div>
+
+
 			<div class="col-md-6">
 				<div class="card border-success">
 					<div class="card-header">Checklist for Java programs before uploading</div>
