@@ -122,7 +122,7 @@ if(isset($_POST['submit'])) {
 		}
 	</script>
 	<a href="help.html"><button class="btn m-1 btn-outline-primary ">Help</button></a>
-	<div class="container mt-5 xxw-50 text-center">
+	<div class="container-md mt-5 xxw-50 text-center">
 		<h2>Welcome to the <b>File Upload Centre</b></h2>
 		<div id="error_message"></div>
 		<div class="card">
@@ -150,15 +150,15 @@ if(isset($_POST['submit'])) {
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-4 col-12 mt-1">
+						<div class="col-lg-2 col-md-4 col-12 mt-1">
 							<button type="submit" name="submit" class="btn btn-primary btn-block">Sign In</button>
 						</div>
 						<!-- /.col -->
-						<div class="col-md-4 col-12 mt-1">
+						<div class="col-lg-3 col-md-4 col-12 mt-1">
 							<a href="register.php" class="btn btn-outline-primary btn-block">Register a new user</a>
 						</div>
 						<!-- /.col -->
-						<div class="col-md-4 col-12 mt-1">
+						<div class="col-lg-3 col-md-4 col-12 mt-1">
 							<!-- <a href="help.html">I forgot my password</a> -->
 							<a href="help.html" class="btn btn-outline-primary btn-block">I forgot my password</a>
 						</div>
