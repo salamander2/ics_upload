@@ -68,11 +68,11 @@ $response = mysqli_fetch_all($result);
 		<div id="usertable">
 		<table class="table table-bordered table-striped">
 			<tr>
-				<th>Full name</th>
-				<th>User name</th>
-				<th>Last Login</th>
-				<th>TotalFiles</th>
-				<th>Delete</th>
+				<th class="align-bottom">Full name</th>
+				<th class="align-bottom">User name</th>
+				<th class="align-bottom">Last Login</th>
+				<th class="align-bottom">TotalFiles<br>(unmarked)</th>
+				<th class="align-bottom">Delete</th>
 			</tr>
 <?php
 
@@ -97,6 +97,36 @@ foreach ($response as $item){
         die($message_);
     }
     
+	//find how many unmarked programs
+    $sql = "SELECT COUNT(filename) FROM fileinfo WHERE username = ? AND mark IS NULL";
+    if ($stmt = $db->prepare($sql)) {
+        $stmt->bind_param("s", $student);
+        $stmt->bind_result($count2);
+        $stmt->execute();
+        $stmt->fetch();
+        $stmt->close();
+    } else {
+        $message_  = 'Invalid query: ' . mysqli_error($db) . "\n<br>";
+        $message_ .= 'SQL: ' . $sql;
+        die($message_);
+    }
+    
+    echo "<tr>";
+    //echo "<td onclick=\"gotoUser(\"$user\")\" >$fullname &bull;</TD>";
+    echo "<th onclick=\"gotoUser('".$student."')\" class=\"text-primary\">&bull; $stFullname &bull;</th>";
+    echo "<td>$student</td>";
+    echo "<td>$lastLogin</td>";
+    if ($count2 > 0) {
+		echo "<td>$count ($count2)</td>";
+    } else {
+		echo "<td>$count</td>";
+    }
+    echo "<td><form method='post' onsubmit=\"return confirmAction('$student')\" action='adminDeleteUser.php'><input name='user' value='$student' style='outline: none;' hidden><button>Delete</button></form></td>";
+    echo "</tr>".PHP_EOL;
+}
+?>
+		</table>
+	</div> 
     echo "<tr>";
     //echo "<td onclick=\"gotoUser(\"$user\")\" >$fullname &bull;</TD>";
     echo "<th onclick=\"gotoUser('".$student."')\" class=\"text-primary\">&bull; $stFullname &bull;</th>";

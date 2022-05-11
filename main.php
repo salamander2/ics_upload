@@ -56,6 +56,7 @@ foreach($scanned_directory as $file)
 
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>File Uploader : <?= $username?></title>
 	<link rel="stylesheet" href="./resources/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
@@ -73,9 +74,7 @@ foreach($scanned_directory as $file)
 			$('#btnMarked').text('Show marked work');
 		}
 	}
-
 	</script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
 	.marked, .shaded {
 		background-color:#DDF;
@@ -258,7 +257,7 @@ Total # of programs = <?=$totalNum?> ♦
 					echo "<td>$filename</td>";
 					echo "<td>$path</td>";
 					echo "<td>$time</td>";
-					echo "<td>";
+					echo "<td colspan=2>";
 					echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden>";
 					echo "<button class='btn btn-info shadow smallbtn sml'>Download</button>";
 					echo "</form> &nbsp; ";
@@ -266,7 +265,6 @@ Total # of programs = <?=$totalNum?> ♦
 					echo "<button class='btn btn-danger shadow smallbtn smr'>Delete</button>";
 					echo "</form></td>";
 					#echo '<td><textarea readonly rows="2" style="width:100%">'.$comment.'</textarea></td>';
-					echo "<td>&nbsp;</td>";
 					echo "<td>$mark</td>";
 					echo "</tr>";
 					echo "<tr class=\"marked\">";
@@ -276,8 +274,26 @@ Total # of programs = <?=$totalNum?> ♦
 					echo "</tr>";
 				
 				}
-				#notmarked
-				 else {
+
+//TODO: smallbtn does nothing. What is smr ??? Use btn-sm
+				#notmarked and not comment
+				 elseif ($mark == "" && $comment == "") {
+					echo "<tr>";
+					echo "<td>$filename</td>";
+					echo "<td>$path</td>";
+					echo "<td>$time</td>";
+					echo "<td colspan=2>";
+					echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden>";
+					echo "<button class='btn btn-info shadow smallbtn sml'>Download</button>";
+					echo "</form> &nbsp; ";
+					echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden>";
+					echo "<button class='btn btn-danger shadow smallbtn smr'>Delete</button>";
+					echo "</form></td>";
+					#echo '<td><textarea readonly rows="1" style="width:100%">'.$comment.'</textarea></td>';
+					echo "<td>$mark</td>";
+					echo "</tr>";
+			    #not marked, but has comment
+				} else {
 					echo "<tr>";
 					echo "<td>$filename</td>";
 					echo "<td>$path</td>";
@@ -293,6 +309,7 @@ Total # of programs = <?=$totalNum?> ♦
 					echo "<td>$mark</td>";
 					echo "</tr>";
 				}
+				
 			}
 
 			?>
