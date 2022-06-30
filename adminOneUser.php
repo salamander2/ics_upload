@@ -137,7 +137,7 @@ if ($stmt = $db->prepare($sql)) {
             <table class="table table-bordered">
                 <tr>
                     <th>Filename with path</th>
-                    <th>Date</th>
+                    <th>Date Uploaded</th>
                     <th></th>
                     <!-- <th>Comments</th> 
 					THis does not make the column wide enough ...-->
@@ -148,7 +148,7 @@ if ($stmt = $db->prepare($sql)) {
 
                 <?php
 //$sql = "SELECT id, username, path, filename, time, comment, mark FROM fileinfo ORDER BY time DESC";
-$sql = "SELECT id, path, filename, time, comment, mark FROM fileinfo WHERE username='$student' ORDER BY time DESC;";
+$sql = "SELECT id, path, filename, timeUploaded, comment, mark FROM fileinfo WHERE username='$student' ORDER BY timeUploaded DESC;";
 $result = mysqli_query($db,$sql);
 //TODO Fix the next line! Why is it here?
 #$stmt->execute();
@@ -158,7 +158,7 @@ while($row = $result->fetch_assoc()) {
     //$user = $row['username'];
     $path = $row['path'];
     $filename = $row['filename'];
-    $time = $row['time'];
+    $time = $row['timeUploaded'];
     $comment = stripslashes($row['comment']);
     $mark = $row['mark'];
     

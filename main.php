@@ -24,7 +24,7 @@ if (!$result) {
 }
 $totalUnmarked = $result->fetch_row()[0];
 
-$sql = "SELECT id,filename,path,time,comment,mark FROM fileinfo WHERE username = ? ORDER by time DESC";
+$sql = "SELECT id,filename,path,timeUploaded,comment,mark FROM fileinfo WHERE username = ? ORDER by timeUploaded DESC";
 if ($stmt = $db->prepare($sql)) {
 	$stmt->bind_param("s", $username);
 	$stmt->execute();
@@ -235,7 +235,7 @@ Total # of programs = <?=$totalNum?> ♦
 			<tr>
 				<th>FileName</th>
 				<th>Folder</th>
-				<th>Date</th>
+				<th>Date Uploaded</th>
 				<th></th>
 				<th class="commentW">Comments</th>
 				<th>Mark</th>

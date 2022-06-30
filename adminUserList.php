@@ -127,18 +127,6 @@ foreach ($response as $item){
 ?>
 		</table>
 	</div> 
-    echo "<tr>";
-    //echo "<td onclick=\"gotoUser(\"$user\")\" >$fullname &bull;</TD>";
-    echo "<th onclick=\"gotoUser('".$student."')\" class=\"text-primary\">&bull; $stFullname &bull;</th>";
-    echo "<td>$student</td>";
-    echo "<td>$lastLogin</td>";
-    echo "<td>$count</td>";
-    echo "<td><form method='post' onsubmit=\"return confirmAction('$student')\" action='adminDeleteUser.php'><input name='user' value='$student' style='outline: none;' hidden><button>Delete</button></form></td>";
-    echo "</tr>".PHP_EOL;
-}
-?>
-		</table>
-	</div> 
 
 <hr>
 </div>

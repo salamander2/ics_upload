@@ -137,7 +137,7 @@ $response = mysqli_fetch_all($result);
                 <tr>
                     <th>Username</th>
                     <th>Filename with path</th>
-                    <th>Date</th>
+                    <th>Date Uploaded</th>
                     <th></th>
                     <th>Comments</th>
                     <th>Mark</th>
@@ -148,7 +148,7 @@ $response = mysqli_fetch_all($result);
 $numNotMarked=0;
 $numMarked=0;
 //$sql = "SELECT id, username, path, filename, time, comment, mark FROM fileinfo ORDER BY time DESC";
-$sql = "SELECT id, users.fullname, users.username, path, filename, time, comment, mark FROM fileinfo INNER JOIN users ON fileinfo.username = users.username ORDER BY time DESC;";
+$sql = "SELECT id, users.fullname, users.username, path, filename, timeUploaded, comment, mark FROM fileinfo INNER JOIN users ON fileinfo.username = users.username ORDER BY timeUploaded DESC;";
 $result = mysqli_query($db,$sql);
 
 //$stmt->execute();
@@ -160,7 +160,7 @@ while($row = $result->fetch_assoc()) {
     $stFullname = $row['fullname'];
     $path = $row['path'];
     $filename = $row['filename'];
-    $time = $row['time'];
+    $time = $row['timeUploaded'];
     $comment = stripslashes($row['comment']);
     $mark = $row['mark'];
     
