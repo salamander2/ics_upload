@@ -24,7 +24,7 @@ if (!$result) {
 }
 $totalUnmarked = $result->fetch_row()[0];
 
-$sql = "SELECT id,filename,path,timeUploaded,comment,mark FROM fileinfo WHERE username = ? ORDER by timeUploaded DESC";
+$sql = "SELECT id,filename,path,timeUploaded,timeMarked,comment,mark FROM fileinfo WHERE username = ? ORDER by timeUploaded DESC";
 if ($stmt = $db->prepare($sql)) {
 	$stmt->bind_param("s", $username);
 	$stmt->execute();
@@ -37,7 +37,7 @@ if ($stmt = $db->prepare($sql)) {
 	die($message_);
 }
 
-$data = mysqli_fetch_all($result);
+$data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 /* Find all (top level) folders for this user */
 $dir = "./files/$username/";
@@ -60,6 +60,7 @@ foreach($scanned_directory as $file)
 	<title>File Uploader : <?= $username?></title>
 	<link rel="stylesheet" href="./resources/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="local.css">
 	<script>
 	var showMarked = true;
 	function hideShowMarked() {
@@ -75,34 +76,6 @@ foreach($scanned_directory as $file)
 		}
 	}
 	</script>
-	<style>
-	.marked, .shaded {
-		background-color:#DDF;
-	}
-	.smallbtn {}
-    th.commentW {
-		width:40%;
-    }
-	@media (max-width: 1100px){
-		/* from Bootstrap 4 .btn-sm */
-		.smallbtn {
-			padding: .25rem .3rem;
-			font-size: .8rem;
-			line-height: 1.4;
-			border-radius: .2rem;
-		}
-		.sml {
-			margin-left:-10px;
-		}
-		.smr {
-			padding-right:2px;
-		}
-		th.commentW {
-			width:36%;
-		}
-	}
-
-	</style>
 </head>
 
 <body>
@@ -235,7 +208,7 @@ Total # of programs = <?=$totalNum?> ♦
 			<tr>
 				<th>FileName</th>
 				<th>Folder</th>
-				<th>Date Uploaded</th>
+				<th>Date Uploaded<br><span class="purp">Marked</span></th>
 				<th></th>
 				<th class="commentW">Comments</th>
 				<th>Mark</th>
@@ -244,19 +217,28 @@ Total # of programs = <?=$totalNum?> ♦
 			<?php
 
 			//filename,path,time,comment,mark
-			foreach ($data as $item){
+			foreach ($data as $row){
+/*
 				$id = $item[0];
 				$filename = $item[1];
 				$path = $item[2];
 				$time = $item[3];
 				$comment = stripslashes($item[4]);
 				$mark = $item[5];
+*/
+				$id = $row['id'];
+				$filename = $row['filename'];
+				$path = $row['path'];
+				$timeMK = $row['timeMarked'];
+				$timeUP = $row['timeUploaded'];
+				$comment = stripslashes($row['comment']);
+				$mark = $row['mark'];
 				#marked:
 				if ($mark != "") {
 					echo "<tr class=\"marked\">";
 					echo "<td>$filename</td>";
 					echo "<td>$path</td>";
-					echo "<td>$time</td>";
+					echo "<td>$timeUP<br><span class='purp'>$timeMK</span></td>";
 					echo "<td colspan=2>";
 					echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden>";
 					echo "<button class='btn btn-info shadow smallbtn sml'>Download</button>";
@@ -281,7 +263,7 @@ Total # of programs = <?=$totalNum?> ♦
 					echo "<tr>";
 					echo "<td>$filename</td>";
 					echo "<td>$path</td>";
-					echo "<td>$time</td>";
+					echo "<td>$timeUP</td>";
 					echo "<td colspan=2>";
 					echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden>";
 					echo "<button class='btn btn-info shadow smallbtn sml'>Download</button>";

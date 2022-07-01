@@ -43,6 +43,7 @@ if ($stmt = $db->prepare($sql)) {
     <title>File Uploader: Admin (<?=$stFullname ?>)</title>
     <link rel="stylesheet" href="./resources/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="local.css">
 	<script src="./resources/jquery.3.4.1.min.js"></script>
 	<script src="./resources/bootstrap.4.5.2.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,11 +63,6 @@ if ($stmt = $db->prepare($sql)) {
 	}
 
 	</script>
-	<style>
-	.marked, .shaded {
-		background-color:#DDF;
-	}
-	</style>
 </head>
 
 <body>
@@ -137,7 +133,7 @@ if ($stmt = $db->prepare($sql)) {
             <table class="table table-bordered">
                 <tr>
                     <th>Filename with path</th>
-                    <th>Date Uploaded</th>
+                    <th><span class="purp">Date Marked</span>/Uploaded</th>
                     <th></th>
                     <!-- <th>Comments</th> 
 					THis does not make the column wide enough ...-->
@@ -148,7 +144,7 @@ if ($stmt = $db->prepare($sql)) {
 
                 <?php
 //$sql = "SELECT id, username, path, filename, time, comment, mark FROM fileinfo ORDER BY time DESC";
-$sql = "SELECT id, path, filename, timeUploaded, comment, mark FROM fileinfo WHERE username='$student' ORDER BY timeUploaded DESC;";
+$sql = "SELECT id, path, filename, timeMarked, timeUploaded, comment, mark FROM fileinfo WHERE username='$student' ORDER BY timeMarked DESC;";
 $result = mysqli_query($db,$sql);
 //TODO Fix the next line! Why is it here?
 #$stmt->execute();
@@ -158,7 +154,9 @@ while($row = $result->fetch_assoc()) {
     //$user = $row['username'];
     $path = $row['path'];
     $filename = $row['filename'];
-    $time = $row['timeUploaded'];
+    $timeMK = $row['timeMarked'];
+    $timeUP = $row['timeUploaded'];
+    //$timeUP = explode(" ",$timeUP)[0];
     $comment = stripslashes($row['comment']);
     $mark = $row['mark'];
     
@@ -168,7 +166,7 @@ while($row = $result->fetch_assoc()) {
 		echo "<tr>";
 	}
     echo "<td>$path/$filename</td>";
-    echo "<td>$time</td>".PHP_EOL;
+    echo "<td><span class='purp'>$timeMK</span><br>$timeUP</td>".PHP_EOL;
     echo "<td>";
     echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp; ".PHP_EOL;
     echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden><input name='student' value='$student' style='outline: none;' hidden> <button class='btn btn-danger shadow'>Delete</button></form></td>".PHP_EOL;

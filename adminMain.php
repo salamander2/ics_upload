@@ -33,6 +33,7 @@ $response = mysqli_fetch_all($result);
     <title>File Uploader: Admin</title>
     <link rel="stylesheet" href="./resources/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="local.css">
 	<script src="./resources/jquery.3.4.1.min.js"></script>
 	<script src="./resources/bootstrap.4.5.2.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,11 +53,6 @@ $response = mysqli_fetch_all($result);
 	}
 
 	</script>
-	<style>
-	.marked, .shaded {
-		background-color:#DDF;
-	}
-	</style>
 </head>
 
 <body>
@@ -137,7 +133,7 @@ $response = mysqli_fetch_all($result);
                 <tr>
                     <th>Username</th>
                     <th>Filename with path</th>
-                    <th>Date Uploaded</th>
+                    <th>Date Uploaded<br><span class="purp">Marked</span></th>
                     <th></th>
                     <th>Comments</th>
                     <th>Mark</th>
@@ -148,7 +144,7 @@ $response = mysqli_fetch_all($result);
 $numNotMarked=0;
 $numMarked=0;
 //$sql = "SELECT id, username, path, filename, time, comment, mark FROM fileinfo ORDER BY time DESC";
-$sql = "SELECT id, users.fullname, users.username, path, filename, timeUploaded, comment, mark FROM fileinfo INNER JOIN users ON fileinfo.username = users.username ORDER BY timeUploaded DESC;";
+$sql = "SELECT id, users.fullname, users.username, path, filename, timeMarked, timeUploaded, comment, mark FROM fileinfo INNER JOIN users ON fileinfo.username = users.username ORDER BY timeUploaded DESC;";
 $result = mysqli_query($db,$sql);
 
 //$stmt->execute();
@@ -160,7 +156,9 @@ while($row = $result->fetch_assoc()) {
     $stFullname = $row['fullname'];
     $path = $row['path'];
     $filename = $row['filename'];
-    $time = $row['timeUploaded'];
+    $timeMK = $row['timeMarked'];
+    //$timeMK = explode(" ",$timeMK)[0];
+    $timeUP = $row['timeUploaded'];
     $comment = stripslashes($row['comment']);
     $mark = $row['mark'];
     
@@ -173,7 +171,11 @@ while($row = $result->fetch_assoc()) {
 	}
     echo "<td>$stFullname</td>";
     echo "<td style=\"max-width:350px;\">$path/ $filename</td>";
-    echo "<td>$time</td>".PHP_EOL;
+	if ($mark != "") {
+		echo "<td>$timeUP<br><span class='purp'>$timeMK</span></td>".PHP_EOL;
+	} else {
+		echo "<td>$timeUP</td>".PHP_EOL;
+	}
     echo "<td>";
     echo "<form class='d-inline' method='post' action='download.php'><input name='id' value='$id' hidden><button class='btn btn-info shadow'>Download</button></form> &nbsp; ".PHP_EOL;
     echo "<form class='d-inline' method='post' action='delete.php' onsubmit=\"return confirmAction()\"> <input name='id' value='$id' style='outline: none;' hidden> <input name='student' value='$studentTemp' style='outline: none;' hidden> <button class='btn btn-danger shadow'>Delete</button></form></td>".PHP_EOL;
