@@ -53,6 +53,8 @@ if(isset($_POST['submit'])) {
 	if (empty($error_message)) {
 		$_SESSION["username"] = $username;
 		$_SESSION["fullname"] = $fullname;
+		//This is set here upon login (AND ALSO IN register.php)  and then session-authkey is never set again.
+		$_SESSION["authkey"] = AUTH_KEY;
 
 		//Update last login timestamp
 		$sql = "UPDATE users set lastLogin=NOW() WHERE username = BINARY ?";

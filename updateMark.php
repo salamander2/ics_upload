@@ -8,6 +8,9 @@ $db = connectToDB();
 if ($username != ADMINUSER) {
     header("Location: main.php");
 }
+if ($_SESSION["authkey"] != AUTH_KEY) { 
+    header("Location:index.php?ERROR=Failed%20Auth%20Key"); 
+}  
 
 ## This will go to xmlhttp.responsetext
 ## so we can't use "die" or "echo" here.

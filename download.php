@@ -5,6 +5,9 @@ $db = connectToDB();
 
 $id = $_POST["id"];
 
+if ($_SESSION["authkey"] != AUTH_KEY) { 
+    header("Location:index.php?ERROR=Failed%20Auth%20Key"); 
+}  
 	//make sure that this is the admin user!
 	//NO! Users need to download and delete as well
 	//if ($username != ADMINUSER) {

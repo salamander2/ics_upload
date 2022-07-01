@@ -17,6 +17,9 @@ $db = connectToDB();
 if ($username != ADMINUSER) {
     header("Location: main.php");
 }
+if ($_SESSION["authkey"] != AUTH_KEY) { 
+    header("Location:index.php?ERROR=Failed%20Auth%20Key"); 
+}  
 
 //get all of the users (students)
 $sql = "SELECT username,fullname,lastLogin FROM users ORDER BY fullname";

@@ -15,6 +15,9 @@ if (empty($username)) {
 	echo "</script>";
 	exit;
 }
+if ($_SESSION["authkey"] != AUTH_KEY) { 
+    header("Location:index.php?ERROR=Failed%20Auth%20Key"); 
+}  
 
 $filename = $_FILES["fileToUpload"]["name"];
 $foldername = $_POST['foldername'];
