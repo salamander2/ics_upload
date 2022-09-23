@@ -4,7 +4,7 @@ require_once "common.php";
 
 //Check if logged in. If not, redirect to index.php 
 if (!isset($username) || empty($username)) header("Location: logout.php");
-if ($_SESSION["authkey"] != AUTH_KEY) { 
+if ($_SESSION["authkey"] != AUTHKEY) { 
     header("Location:index.php?ERROR=Failed%20Auth%20Key"); 
 }  
 

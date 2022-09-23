@@ -15,7 +15,7 @@ if (empty($username)) {
 	echo "</script>";
 	exit;
 }
-if ($_SESSION["authkey"] != AUTH_KEY) { 
+if ($_SESSION["authkey"] != AUTHKEY) { 
     header("Location:index.php?ERROR=Failed%20Auth%20Key"); 
 }  
 
@@ -136,7 +136,7 @@ if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $targetfile)) {
 }
 
 if ($fileExists) {
-	$sql = "UPDATE fileinfo SET comment='', mark='', time=now() WHERE id=$id";
+	$sql = "UPDATE fileinfo SET comment='', mark='', timeUploaded=now() WHERE id=$id";
 	if ($stmt = $db->prepare($sql)) {
 		$stmt->execute();
 		$stmt->close();

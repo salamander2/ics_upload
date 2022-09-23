@@ -70,7 +70,7 @@ if(isset($_POST['submit'])) {
 		$_SESSION["fullname"] = $fullname;
 		#$_SESSION["pwdhash"] = $pwdhash;
 		//This is set here upon login (AND ALSO IN register.php)  and then session-authkey is never set again.
-		$_SESSION["authkey"] = AUTH_KEY;
+		$_SESSION["authkey"] = AUTHKEY;
 		header('Location:main.php');
 	}
 }

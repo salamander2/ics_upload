@@ -54,7 +54,7 @@ if(isset($_POST['submit'])) {
 		$_SESSION["username"] = $username;
 		$_SESSION["fullname"] = $fullname;
 		//This is set here upon login (AND ALSO IN register.php)  and then session-authkey is never set again.
-		$_SESSION["authkey"] = AUTH_KEY;
+		$_SESSION["authkey"] = AUTHKEY;
 
 		//Update last login timestamp
 		$sql = "UPDATE users set lastLogin=NOW() WHERE username = BINARY ?";
@@ -171,11 +171,12 @@ if(isset($_POST['submit'])) {
 			</div>
 		</div>
 		<?php if ($error_message != "") echo $error_message; ?>
-<div class="alert alert-success">Hi. I still have a few things to mark, and some of you are checking here to see...<br>
+<!-- <div class="alert alert-success">Hi. I still have a few things to mark, and some of you are checking here to see...<br>
 I've estimated marks for the final projects and as I've marked them found that it doesn't change your mark.<br> 
 I do want to finish marking the final projects and give feedback to you (in case you want it). <br>
 I can email you so that you don't have to keep checking here.
  </div>
+-->
 	</div>
 
 

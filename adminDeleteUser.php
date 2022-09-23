@@ -9,7 +9,7 @@ $db = connectToDB();
 if ($username != ADMINUSER) {
 	header("Location: main.php");
 }
-if ($_SESSION["authkey"] != AUTH_KEY) { 
+if ($_SESSION["authkey"] != AUTHKEY) { 
     //this is to preven someone from loging in to another php page on the same server and then transferinng to this database without  authenticating 
     header("Location:index.php?ERROR=Failed%20Auth%20Key"); 
 }  
