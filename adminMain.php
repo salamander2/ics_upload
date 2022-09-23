@@ -128,7 +128,7 @@ $response = mysqli_fetch_all($result);
         </div>
 
 <?php
-    $sql = "SELECT COUNT(username) FROM users";
+    $sql = "SELECT COUNT(username) FROM users WHERE code LIKE '$group'";
 	$result=runSimpleQuery($db,$sql);
 	$numUsers = $result->fetch_row()[0];
 ?>
@@ -141,9 +141,23 @@ $response = mysqli_fetch_all($result);
             <div id="error_message"></div>
             <h2 class="text-center">
 <div class="btn-group float-left">
-  <button type="button" class="btn btn-outline-secondary">O</button>
-  <button type="button" class="btn btn-outline-primary">A</button>
-  <button type="button" class="btn btn-outline-success">B</button>
+<?php
+if ($group=="_") {
+  echo '<a href=""><button type="button" class="btn btn-secondary">O</button></a>';
+  echo '<a href="adminMain.php?GROUP=A"><button type="button" class="btn btn-outline-primary">A</button></a>';
+  echo '<a href="adminMain.php?GROUP=B"><button type="button" class="btn btn-outline-success">B</button></a>';
+}
+if ($group=="A") {
+  echo '<a href="adminMain.php?GROUP=O"><button type="button" class="btn btn-outline-secondary">O</button></a>';
+  echo '<a href=""><button type="button" class="btn btn-primary">A</button></a>';
+  echo '<a href="adminMain.php?GROUP=B"><button type="button" class="btn btn-outline-success">B</button></a>';
+}
+if ($group=="B") {
+  echo '<a href="adminMain.php?GROUP=O"><button type="button" class="btn btn-outline-secondary">O</button></a>';
+  echo '<a href="adminMain.php?GROUP=A"><button type="button" class="btn btn-outline-primary">A</button></a>';
+  echo '<a href=""><button type="button" class="btn btn-success">B</button></a>';
+}
+?>
 </div>
 
 Uploaded Files
