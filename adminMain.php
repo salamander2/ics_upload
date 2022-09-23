@@ -19,10 +19,20 @@ if ($username != ADMINUSER) {
 }
 if ($_SESSION["authkey"] != AUTHKEY) { 
     header("Location:index.php?ERROR=Failed%20Auth%20Key"); 
-}  
+}
 
+//select group
+$group="O";
+if (isset($_GET["GROUP"])) {
+  $group=$_GET["GROUP"];
+}
+if ($group == 'O') $group = '_';  //wildcard
+
+// **** WHY?? THIS IS NEVER USED ****
 //get all of the users (students)
 $sql = "SELECT username,fullname FROM users ORDER BY fullname";
+#if ($group == "A") $sql = "SELECT username,fullname FROM users WHERE code='A' ORDER BY fullname";
+#if ($group == "B") $sql = "SELECT username,fullname FROM users WHERE code='B' ORDER BY fullname";
 $result=runSimpleQuery($db,$sql);
 $response = mysqli_fetch_all($result);
 
@@ -129,7 +139,14 @@ $response = mysqli_fetch_all($result);
 
 <div class="container-fluid">
             <div id="error_message"></div>
-            <h2 class="text-center">Uploaded Files
+            <h2 class="text-center">
+<div class="btn-group float-left">
+  <button type="button" class="btn btn-outline-secondary">O</button>
+  <button type="button" class="btn btn-outline-primary">A</button>
+  <button type="button" class="btn btn-outline-success">B</button>
+</div>
+
+Uploaded Files
 
 <button id="btnMarked" class="btn btn-outline-warning float-right" type="button" onclick="hideShowMarked()">Hide marked work</button></h2>
             <table class="table table-bordered">
@@ -147,7 +164,8 @@ $response = mysqli_fetch_all($result);
 $numNotMarked=0;
 $numMarked=0;
 //$sql = "SELECT id, username, path, filename, time, comment, mark FROM fileinfo ORDER BY time DESC";
-$sql = "SELECT id, users.fullname, users.username, path, filename, timeMarked, timeUploaded, comment, mark FROM fileinfo INNER JOIN users ON fileinfo.username = users.username ORDER BY timeUploaded DESC;";
+//$sql = "SELECT id, users.fullname, users.username, path, filename, timeMarked, timeUploaded, comment, mark FROM fileinfo INNER JOIN users ON fileinfo.username = users.username ORDER BY timeUploaded DESC;";
+$sql = "SELECT id, users.fullname, users.username, path, filename, timeMarked, timeUploaded, comment, mark FROM fileinfo INNER JOIN users ON fileinfo.username = users.username WHERE users.code LIKE '$group' ORDER BY timeUploaded DESC;";
 $result = mysqli_query($db,$sql);
 
 //$stmt->execute();
