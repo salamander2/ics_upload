@@ -114,7 +114,7 @@ if(isset($_POST['submit'])) {
 				document.getElementById("error_message").outerHTML =
 					'<div id="error_message" class="alert alert-danger w-50 "></div>';
 				document.getElementById("password").outerHTML =
-					'<input type="text" name="password" id="password"  class="form-control border-danger" placeholder="Password">';
+					'<input type="password" name="password" id="password" class="form-control border-danger" placeholder="Password">';
 				document.getElementById("error_message").innerHTML = text;
 				document.getElementById("password").value = "";
 				return false;
@@ -143,8 +143,7 @@ if(isset($_POST['submit'])) {
 						</div>
 					</div>
 					<div class="input-group mb-3">
-						<input type="password" name="password" id="password" class="form-control"
-							placeholder="Password">
+						<input type="password" name="password" id="password" class="form-control" placeholder="Password">
 						<div class="input-group-append">
 							<div class="input-group-text">
 								<span class="fa fa-lock"></span>
