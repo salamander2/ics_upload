@@ -1,0 +1,3 @@
+#AddType  text/plain  .java
+AddType  text/plain  .java
+AddType  text/plain  .php

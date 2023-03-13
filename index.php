@@ -84,7 +84,8 @@ if(isset($_POST['submit'])) {
 	<meta charset="utf-8">
 	<title>File Uploader - login</title>
 	<link rel="stylesheet" href="./resources/bootstrap.min.css">
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<!--	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
+	 <link rel="stylesheet" href="./resources/font-awesome.min.css">
 	<!--    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>-->
 	<!--    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -138,7 +139,7 @@ if(isset($_POST['submit'])) {
 						<input type="text" name="username" id="username" class="form-control" placeholder="Username" autofocus>
 						<div class="input-group-append">
 							<div class="input-group-text">
-								<span class="fa fa-envelope"></span>
+								<i class="fa fa-user"></i>
 							</div>
 						</div>
 					</div>
