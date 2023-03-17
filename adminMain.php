@@ -74,6 +74,33 @@ $response = mysqli_fetch_all($result);
 			return confirm("Are you sure");
 		}
 
+		/* USING JQUERY INSTAED OF AJAX
+			https://www.digitalocean.com/community/tutorials/submitting-ajax-forms-with-jquery
+
+		$(document).ready(function () {
+		  $("form").submit(function (event) {
+			var formData = {
+			  name: $("#name").val(),
+			  email: $("#email").val(),
+			  superheroAlias: $("#superheroAlias").val(),
+			};
+
+			$.ajax({
+			  type: "POST",
+			  url: "process.php",
+			  data: formData,
+			  dataType: "json",
+			  encode: true,
+			}).done(function (data) {
+			  console.log(data);
+			});
+
+			event.preventDefault();
+		  });
+		});
+
+		*/
+
         function updateRow(num) {
 
             //Create a formdata object
@@ -81,8 +108,8 @@ $response = mysqli_fetch_all($result);
 
             formData.append("fileid", num);
             var name = "mark" + num;
-            var val = document.getElementById(name).value;
-            formData.append("mark", val);
+            var mark = document.getElementById(name).value;
+            formData.append("mark", mark);
             var name = "comment" + num;
             var val = document.getElementById(name).value;
 			//alert (val);
@@ -104,9 +131,11 @@ $response = mysqli_fetch_all($result);
                     //    txt += xmlhttp[x] + " ";
                     //};
                     //alert(txt);
-                    // alert(xmlhttp);
+                    // alert(xmlhttp);	
 					alert("Row " + num + " updated"); 
-                    window.location.reload(true);
+					if (mark != "")	$('#row'+num).hide();
+					// or  $('#row'+num).css('display', 'none');
+					//window.location.reload(true);
                 }
             }
 
@@ -198,10 +227,10 @@ while($row = $result->fetch_assoc()) {
     $mark = $row['mark'];
     
 	if ($mark != "") {
-		echo "<tr class=\"marked\">";
+		echo "<tr id=\"row$id\" class=\"marked\">";
 		$numMarked++;
 	} else {
-		echo "<tr>";
+		echo "<tr id=\"row$id\">";
 		$numNotMarked++;
 	}
     echo "<td>$stFullname</td>";
