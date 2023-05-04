@@ -36,7 +36,6 @@ $response = mysqli_fetch_all($result);
     <meta charset="utf-8">
     <title>File Uploader: Admin - user list</title>
     <link rel="stylesheet" href="./resources/bootstrap.min.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<script src="./resources/jquery.3.4.1.min.js"></script>
 	<script src="./resources/bootstrap.4.5.2.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
