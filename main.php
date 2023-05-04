@@ -62,7 +62,6 @@ foreach($scanned_directory as $file)
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>File Uploader : <?= $username?></title>
 	<link rel="stylesheet" href="./resources/bootstrap.min.css">
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="local.css">
 	<script>
 	var showMarked = true;
