@@ -49,6 +49,7 @@ $response = mysqli_fetch_all($result);
 	
 		function gotoUser(student) {
 			console.log(student);
+			student = student.replace("#", "%23");
 			location.href="adminOneUser.php?ID="+student;
 		}
     </script>
