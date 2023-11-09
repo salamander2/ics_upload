@@ -84,16 +84,10 @@ if(isset($_POST['submit'])) {
 	<meta charset="utf-8">
 	<title>File Uploader - login</title>
 	<link rel="stylesheet" href="./resources/bootstrap.min.css">
-<!--	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
-	 <link rel="stylesheet" href="./resources/font-awesome.min.css">
-	<!--    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>-->
-	<!--    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-</head>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" oldhref="./resources/font-awesome.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script>
 
-<body>
-	<!-- This form will call either login.php or register.php with the same fields. -->
-	<script>
 		function validateData() {
 			var x, text;
 			x = document.getElementById("username").value;
@@ -123,7 +117,10 @@ if(isset($_POST['submit'])) {
 
 			return true;
 		}
-	</script>
+    </script>
+</head>
+
+<body>
 	<a href="help.html"><button class="btn m-1 btn-outline-primary ">Help</button></a>
 	<div class="container-md mt-5 xxw-50 text-center">
 		<h2>Welcome to the <b>File Upload Centre</b></h2>
@@ -134,6 +131,7 @@ if(isset($_POST['submit'])) {
 			<div class="card-body">
 				<p class="">Sign in to start your session</p>
 
+				<!-- This form will call either login.php or register.php with the same fields. -->
 				<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" onsubmit="return validateData()">
 					<div class="input-group mb-3">
 						<input type="text" name="username" id="username" class="form-control" placeholder="Username" autofocus>
@@ -161,16 +159,14 @@ if(isset($_POST['submit'])) {
 						</div>
 						<!-- /.col -->
 						<div class="col-lg-3 col-md-4 col-12 mt-1">
-							<!-- <a href="help.html">I forgot my password</a> -->
 							<a href="help.html" class="btn btn-outline-primary btn-block">I forgot my password</a>
 						</div>
 						<!-- /.col -->
 					</div>
-				</form>
 
 			</div>
 		</div>
-		<?php if ($error_message != "") echo $error_message; ?>
+		<?php if ($error_message != "") {echo $error_message;$error_message="";} ?>
 <!-- <div class="alert alert-success">Hi. I still have a few things to mark, and some of you are checking here to see...<br>
 I've estimated marks for the final projects and as I've marked them found that it doesn't change your mark.<br> 
 I do want to finish marking the final projects and give feedback to you (in case you want it). <br>
@@ -179,7 +175,5 @@ I can email you so that you don't have to keep checking here.
 -->
 	</div>
 
-
 </body>
-
 </html>
