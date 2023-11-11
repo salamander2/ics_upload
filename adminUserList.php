@@ -39,21 +39,40 @@ $response = mysqli_fetch_all($result);
 	<script src="./resources/jquery.3.4.1.min.js"></script>
 	<script src="./resources/bootstrap.4.5.2.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
 
-<body>
     <script>
-		function confirmAction(student) {
-			return confirm("Delete "+student+". Are you sure");
-		}
+	document.addEventListener("DOMContentLoaded", () => {
+		const btnAuth = document.getElementById("btnAuth");
+		btnAuth.addEventListener("click", () => { window.alert("<?=AUTHCODE?>")} );
+
+		const btnGen = document.getElementById("btnGen");
+		btnGen.addEventListener("click", genNewCode );
+	});
+	function confirmAction(student) {
+		return confirm("Delete "+student+". Are you sure");
+	}
+
+	function gotoUser(student) {
+		//console.log(student);
+		location.href="adminOneUser.php?ID="+student;
+	}
+	function genNewCode() {
+	const xhr = new XMLHttpRequest();
+	xhr.onload = () => {
+		//document.getElementById("output").innerHTML = xhr.responseText;
+		window.alert(xhr.responseText);
+	};
+	xhr.onerror = function() {
+	  	//null
+	};
+	xhr.open("GET", "genAuthCode.php");
+	xhr.send();
+	}
 	
-		function gotoUser(student) {
-			console.log(student);
-			location.href="adminOneUser.php?ID="+student;
-		}
     </script>
 
-
+</head>
+<body>
     <div class="container my-2 mx-auto">
         <div class="card bg-secondary pt-3 my-2 py-2">
             <h3 class="text-center text-white">
@@ -64,8 +83,12 @@ $response = mysqli_fetch_all($result);
             <div class="card mx-4 my-2 pt-2 bg-primary text-center text-white">
                 <h3>Users Control Panel</h3>
             </div>
+	    <p class="mx-4 my-2">
+	    <button id="btnAuth" class="btn btn-info">Show Authorization Code</button>
+	    <button id="btnGen" class="btn btn-secondary float-right">Generate Random AuthCode</button>
+	    </p>
         </div>
-
+<div id="output"></div>
 <!-- Show All Users -->
 		<div id="usertable">
 		<table class="table table-bordered table-striped">
@@ -129,10 +152,8 @@ foreach ($response as $item){
 ?>
 		</table>
 	</div> 
-
 <hr>
+
 </div>
-
 </body>
-
 </html>

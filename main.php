@@ -32,7 +32,7 @@ if ($stmt = $db->prepare($sql)) {
 	$stmt->bind_param("s", $username);
 	$stmt->execute();
 	$result = $stmt->get_result();
-	$stmt->fetch();
+	//$stmt->fetch();
 	$stmt->close();
 } else {
 	$message_  = 'Invalid query: ' . mysqli_error($db) . "\n<br>";
