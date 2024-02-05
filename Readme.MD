@@ -20,5 +20,5 @@ _Please see previous version of this Readme.MD_
 ## Improvements
 
 If this amazing app ever gets used by others, I will add in two things:
-:one: a password reset feature (the admin can reset the password, and the user can then log in and then change the password to whatever he/she wants)
-:two: a way to divide students into three classes, A,B,C.  Right now there is just A and B, and O being all. However, this data has to be entered using PHPmyAdmin
+1️⃣  a password reset feature (the admin can reset the password, and the user can then log in and then change the password to whatever he/she wants)
+2️⃣ a way to divide students into three classes, A,B,C.  Right now there is just A and B, and O being all. However, this data has to be entered using PHPmyAdmin
